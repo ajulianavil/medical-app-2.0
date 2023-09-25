@@ -74,7 +74,6 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -166,16 +165,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-# STATIC_URL = '/static/'
-
-# STATICFILES_DIRS = [
-#     BASE_DIR / "main/static",
-# ]
-
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-STATIC_TMP = os.path.join(BASE_DIR,'static')
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "main/static",
+]
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -224,16 +218,12 @@ AFI_MAX = 24
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = os.getenv("diagnosisapp-bucket")
-# AWS_S3_SIGNATURE_NAME = 's3v4',
 AWS_S3_REGION_NAME = 'us-east-2'
 AWS_DEFAULT_ACL = 'public-read'
-#AWS_S3_FILE_OVERWRITE = False
-# AWS_S3_VERITY = True
 AWS_QUERYSTRING_AUTH = False
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 #Heroku Logging
 

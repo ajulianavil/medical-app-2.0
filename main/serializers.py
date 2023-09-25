@@ -1,7 +1,6 @@
 import base64
 import datetime
 from rest_framework import serializers
-from drf_extra_fields.fields import Base64ImageField
 from django.core.files.base import ContentFile
 from .models import *
 from django.contrib.auth import get_user_model

@@ -1,0 +1,29 @@
+.cont{
+    height: 100vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #F1F0F7;
+}
+img {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.login-card{
+    width: 800px;
+    transition: 0.3s;
+    border-radius: 15px;
+}
+
+.login-options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+}

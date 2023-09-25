@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'League Spartan', sans-serif;
+}
+
+h4{
+    font-family: 'League Spartan', sans-serif;
+}
+
+p{
+    font-weight: lighter; 
+    margin-bottom: 0px; 
+    font-size: medium;
+}
+
+
+.reports-container-two {
+  width: 80%;
+  /* flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; */
+}
+
+.card-two {
+  border-radius: 10px;
+  width: 100%; /* Set width to 100% */
+  min-height: 100px;
+  background-color: rgb(255, 255, 255);
+  padding: 10px 30px 40px;
+  overflow-x: hidden;
+  box-shadow: none;
+  border: none;
+  padding: 20px;
+  margin: 15px;
+  box-sizing: border-box;
+  word-wrap: break-word; /* Add this property */
+  text-align: initial;
+}
+
+.mid-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Clears any floats within the container */
+}
+
+.left-div, .right-div {
+    flex: 0 0 auto; /* Allows divs to shrink to fit content */
+    margin: 0 10px; /* Adjust the margin between the divs as per your preference */
+}
+.left-div {
+  flex: 1; /* Allow the div to grow and take up remaining space */
+  overflow: hidden; /* Hide any overflowing content */
+  text-overflow: ellipsis; /* Show an ellipsis (...) for truncated text */
+}
+
+.right-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.feto-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radio-label{
+  font-weight: bold;
+  color: #0796D8;
+  font-size: large;
+}
+
+.radio-input {
+    /* display: none; */
+    margin-left: 5px;
+  }
+  
+  .radio-label {
+    cursor: pointer;
+  }
+
+  .radio-input:checked + .radio-label i {
+    color: #26283E;
+  }
+  
+  .radio-label:hover .tooltip {
+    display: block;
+  }
+
+  .card {
+    box-shadow: none;
+    border: none;
+    padding: 20px;
+    margin: 15px;
+    box-sizing: border-box;
+    max-width: 100%; /* Limit the maximum width of the card */
+    border-radius: 10px;
+    width: 500px;
+    min-height: 100px; /* Set a minimum height */
+    background-color: rgba(7, 150, 216, 0.1);
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+.card {
+  /* Existing card styles */
+
+  /* Scrollbar styles */
+  scrollbar-width: thin;
+  scrollbar-color: #888888 #ffffff; /* Change these colors to fit your design */
+}
+
+.card::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.card::-webkit-scrollbar-track {
+  background: #ffffff; /* Color of the track */
+}
+
+.card::-webkit-scrollbar-thumb {
+  background-color: #888888; /* Color of the thumb */
+  border-radius: 4px; /* Rounded corners of the thumb */
+}
+
+.card::-webkit-scrollbar-thumb:hover {
+  background-color: #555555; /* Color of the thumb on hover */
+}
+
+.text-center {
+    text-align: center;
+}
+  
+.reports-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn .btn-reg {
+  width: 200px;
+  /* background-color: #0796D8; */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  transition: 0.3s;
+}
+
+.btn-reg{
+  background: #63AC3D;
+  width: 200px;
+  /* background-color: #0796D8; */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  transition: 0.3s;
+}
+
+.btn:hover{
+  background-color: #0279AF;
+}
+
+.btn-reg:hover{
+  background-color: #338608;
+}
+
+.form input {
+  margin: 10px 0;
+  width: 100%;
+  background-color: #e2e2e2;
+  border: none;
+  outline: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+}
+

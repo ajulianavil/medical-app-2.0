@@ -1,0 +1,231 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>NeuroQuick</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan&family=Montserrat:wght@700&display=swap" rel="stylesheet"> 
+    <style>
+        h1 {
+            font-family: 'League Spartan', sans-serif;  
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            text-shadow: 2px 2px 4px #000;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h2{
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        p{
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        .image-with-text {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .image-with-text img {
+            width: 500px;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 25px;
+        }
+
+        .logo{
+            {% comment %} height: 100px; {% endcomment %}
+            width: 250px;
+        }
+
+        .welcome
+        {
+            width: 80%;
+        }
+
+        .navbar-nav{
+            width: 300px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            font-family: 'League Spartan', sans-serif;
+            font-weight: bold; 
+        }
+
+        .menuItem{
+            color: #26283E,
+        }
+
+        .menuItem:hover{
+            text-decoration: none;
+        }
+
+        .footer-distributed{
+            background-color: #F1F0F7;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+            box-sizing: border-box;
+            width: 100%;
+            font: bold 16px sans-serif;
+            text-align: left;
+            padding: 20px 20px;
+            overflow: hidden;
+        }
+
+        .loginLink{
+            font-family: 'League Spartan', sans-serif;
+            font-weight: bold;
+            color: #26283E;
+            text-align: center;
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .loginLink:hover{
+            text-decoration: none;
+            color: #0279AF; 
+        }
+
+        .aboutUsImg{
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light  container">
+        <!-- <a class="navbar-brand" href="#">Brand</a> -->
+        {% comment %} <img class="logo" src="{% static 'images/medicApp.png' %}" alt="medicAppLogo" /> {% endcomment %}
+
+        <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/landing">Inicio</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link menuItem" href="#">Sobre nosotros  <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link menuItem" href="/howToRegister">Registro</a>
+        </li>
+        <li class="nav-item">
+        </li>
+    </ul>
+    {% comment %} <a class="btn btn-primary" href="login">Iniciar sesión</a> {% endcomment %}
+    <a href="login" class="loginLink"> Iniciar sesión </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        </div>
+    </nav>
+    <main>
+        <div style="padding: 30px; ">
+            <div class="image-with-text container">
+                <img class="aboutUsImg" src="{% static 'images/dispositivo-ultrasonico.jpg'%}"
+                    alt="Ultrasonido">
+                <div class="text info">
+                    <h2>Diagnóstico inmediato</h2>
+                    <p style="text-align: center"> Médicos de instituciones hospitalarias identifican y diagnostican <br>
+                        anomalías del sistema nervioso central fetal en segundos.
+                    </p>
+
+                </div>
+            </div>
+            <br />
+            <div class="image-with-text container">
+                <div class="text info">
+                    <h2>Repositorio de datos</h2>
+                    <p style="text-align: center"> Investigadores y estudiantes de medicina utilizan los datos <br>
+                    recopilados de casos reales para correr estudios médicos y <br> estadísticos, sin poner en riesgo la privacidad de los pacientes.
+                    </p>
+                </div>
+                <img class="aboutUsImg" src="{% static 'images/medico-reporte.jpg'%}"
+                    alt="Ultrasonido">
+            </div>
+        </div>
+    </main>
+    <br />
+    <br />
+    {% comment %}<footer class="footer-distributed">
+
+         <div class="footer-left"> 
+            <h3>Company<span>logo</span></h3>
+
+            <p class="footer-links">
+                <a href="#">Home</a>
+                ·
+                <a href="#">Blog</a>
+                ·
+                <a href="#">Pricing</a>
+                ·
+                <a href="#">About</a>
+                ·
+                <a href="#">Faq</a>
+                ·
+                <a href="#">Contact</a>
+            </p>
+
+            <p class="footer-company-name">Company Name © 2015</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>21 Revolution Street</span> Paris, France</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+1 555 123456</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@company.com">support@company.com</a></p>
+            </div>
+
+        </div> 
+
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>Andrea Villalba - Laura Serrano</span>
+            </p>
+
+            {% comment %} <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+
+            </div>
+
+        </div>
+
+    </footer> {% endcomment %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.tutorialzine.com/misc/enhance/v2.js" async=""></script>
+</body>
+</html>

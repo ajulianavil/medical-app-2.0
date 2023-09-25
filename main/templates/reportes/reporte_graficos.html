@@ -1,0 +1,196 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load my_filters %}
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/reporte_graficos.css' %}" />
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid row" style="padding-top: 30px">
+  <h1 class="mb-4" style="font-weight: bold; color: #0796D8"> Análisis de reporte </h1>
+  <p style="color: #909090; margin: 0px">Paciente C.C {{matching_consulta.idpac_id|get_pacient_id}}</p> 
+  <p style="color: #909090">Embarazo {{matching_consulta.idembarazo_id|get_numero_embarazo}} - Consulta N° {{matching_consulta.consultaid}}</p> 
+
+
+</div>
+<div class="container">
+  
+  <div class="left-div">
+    <div class="col"> <p style="margin: 0px; font-weight: bold; ">Edad gestacional: {{reporte.ga}} semanas</p></div>
+    </br> 
+    <table id="infoTable" class="table table-fixed table-condensed">
+      <thead style="font-align: center; font-weight: medium">
+        <tr>
+          <th> </th>
+          <th>Dato</th>
+          <th>Mínimo</th>
+          <th>Máximo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for key, values in reporte_data.items %}
+        {% comment %} {% for data in reporte_data %} {% endcomment %}
+          <tr class="clickableRow {% if values.is_lower %} lower {% elif values.is_higher %} higher {% else %} normal {% endif %}">
+          <td style="text-align: left !important;">{{ key}}</td> {% comment %}  text-transform: uppercase;  {% endcomment %}
+          <td>{{ values.value }}</td>
+          <td>{{ values.minvalue }}</td>
+          <td>{{ values.maxvalue }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="col cont-leyend">
+      <div class="leyend" style="background-color: #F4B4B4;"></div> <p style="margin-bottom: 0; font-weight: bold;">Superior</p>
+      <div  class="leyend" style="background-color: #F8DB96; margin-left: 5px"></div> <p style="margin-bottom: 0; font-weight: bold;">Inferior</p>
+      <div  class="leyend" style="background-color: #B9E2A3; margin-left: 5px"></div> <p style="margin-bottom: 0; font-weight: bold;">Normal</p>
+    </div>  
+
+  </div>
+  <div class="right-div">
+    <div style="flex: 0 0 auto; margin: 0px 20px;">
+      <div class="tooltip-container">
+        <i class="fa-solid fa-circle-question"></i>
+        <span class="tooltip">De click sobre la fila de la tabla que desea graficar.</span>
+      </div>
+      <h4 style="font-weight: bold; color: #26283E; text-align: center; display: inline-block; margin: 0px 10px;">Graficar:</h4>
+      <h4 style="font-weight: medium; color: #26283E; text-align: center; margin: 0; display: inline-block" id="title"></h4>
+    </div>
+    
+    <canvas id="myChart"></canvas>
+  </div>
+  
+</div>
+<div style="display:flex; justify-content: flex-end; padding: 10px 50px">
+  <button id="submitBtn" class="btn goback-button" style="width: 200px;" onclick="goBack()">Volver a reporte</button>
+</div>
+
+<script>
+
+  function goBack() {
+    window.history.back();
+  }
+  
+  $('#infoTable').on('click', 'tbody tr', function (event) {
+    $(this).addClass('highlight').siblings().removeClass('highlight');
+
+    var rowData = $(this).find('td').map(function () {
+      return $(this).text();
+    }).get();
+
+    console.log('Row data:', rowData);
+    document.getElementById("title").innerHTML = rowData[0];
+  });
+
+  $(document).ready(function() {
+    $('tbody tr').click(function() {
+      $('tbody tr').removeClass('selected selected-lower selected-higher selected-normal'); // Remove all classes from all rows
+      
+      // Check for 'lower', 'higher', or 'normal' class and add corresponding class
+      if ($(this).hasClass('lower')) {
+        $(this).addClass('selected-lower');
+      } else if ($(this).hasClass('higher')) {
+        $(this).addClass('selected-higher');
+      } else if ($(this).hasClass('normal')) {
+        $(this).addClass('selected-normal');
+      }
+    });
+  });
+
+  // Handle row click event
+  $('#infoTable').on('click', 'tbody tr', function (event) {
+    var row = event.target.closest('tr');
+    var id = row.getAttribute('data-id');
+    var rowData = $(this).find('td').map(function () {
+      return $(this).text();
+    }).get();
+
+    // Make an AJAX request to fetch new data based on the clicked row
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        var newData = JSON.parse(xhr.responseText);
+        // Update the chart data
+        myChart.data.datasets[0].data = newData.values_min;
+        myChart.data.datasets[1].data = newData.values_max;
+        myChart.data.labels = newData.values_ga;
+        myChart.data.datasets[3].data = newData.values_hist;
+
+        var data_2 = [];
+        for (var i = 0; i < newData.values_ga.length; i++) {
+          if(newData.values_ga[i] == parseInt(newData.ga_reporte)){
+            data_2.push(newData.value_reporte)
+          }else{
+            data_2.push('None')
+          }
+        }
+        myChart.data.datasets[2].data = data_2;
+        myChart.update();
+      }
+    };
+    var reporteString = '{{reporte}}';
+    var startIndex = reporteString.lastIndexOf('(') + 1;
+    var endIndex = reporteString.lastIndexOf(')');
+    var reporteId = parseInt(reporteString.slice(startIndex, endIndex), 10);
+
+    xhr.open('GET', '/chart-data/'+ "{{matching_consulta.idpac_id}}" + '/'+ reporteId + '/' + rowData[0] + '/' + '{{reporte.ga}}'+ '/' + '{{reporte.consultaid}}');
+    xhr.send();
+  });
+
+  // Create initial chart using default data
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Mínimos',
+        data: [],  // Initial default data
+        backgroundColor: 'rgba(7, 150, 216, 0.1)',
+        borderColor: 'rgba(7, 150, 216, 0.3)',
+        borderWidth: 1 
+      },
+      {
+        label: 'Máximos',
+        data: [],  // Initial default data
+        backgroundColor: 'rgba(159, 160, 208, 0.1)',
+        borderColor: 'rgba(159, 160, 208, 0.3)',
+        borderWidth: 1
+      },
+      {
+        label: 'Dato reporte',
+        data: [],  // Initial default data
+        backgroundColor: 'rgba(7, 150, 216, 0.5)',
+        borderColor: 'rgba(7, 150, 216, 1)',
+        borderWidth: 1,
+        pointStyle: 'circle',  // Set pointStyle to 'circle'
+        pointRadius: 6  // Set the radius of the points
+      },
+      {
+        label: 'Históricos',
+        data: [],  // Initial default data
+        backgroundColor: 'rgba(112, 217, 84, 0.5)',
+        borderColor: 'rgba(112, 217, 84, 1)',
+        borderWidth: 1,
+        pointStyle: 'circle',  // Set pointStyle to 'circle'
+        pointRadius: 5 
+     }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+
+{% endblock %}

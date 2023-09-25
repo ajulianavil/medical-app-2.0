@@ -1,0 +1,203 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load my_filters %}
+{% load custom_tags %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/search_record.css' %}" />
+<script src="{% static 'js/validations.js' %}"></script>
+{% endblock %}
+{% block content %}
+
+  <div>
+    <div class="container-fluid row" style="padding-top: 50px">
+      <h1 class="mb-4" style="font-weight: bold; color: #0796D8">Buscar consulta</h1>
+      <p style="font-weight: bold;">Aquí podrá acceder a los registros de sus pacientes.</p> 
+
+      {% comment %} <div class="col-6" style="width: auto;">
+      </div>
+      <div class="col-6" style="width: auto;">
+        <div class="tooltip-container">
+          <i class="fa-solid fa-circle-question" style="font-size: large; position: absolute; top: -10px;"></i>
+          <span class="tooltip">Por defecto se muestran los registros del último año.</span>
+        </div>
+      </div> {% endcomment %}
+    </div>
+    <div class="input-group input-group-sm" style="position: relative; padding: 0 100px 0 100px;">
+        <form id="search-form" class="search-formm" method="POST">
+          {% csrf_token %}
+          <div class="mid-container">
+
+            <div class="left-div">
+              <div class="row">
+                <div class="col">
+                  <div style="display: inline-block;">
+                    <label> Cédula de paciente </label> 
+                  </div>
+                  <div style="display: inline-block;">
+                    <div class="tooltip-container">
+                      <i class="fa-solid fa-circle-question" data-tooltip="Al aplicar este filtro se muestran todas las coincidencias, sin importar el año."></i>
+                      <span class="tooltip">Al aplicar este filtro se muestran todas las coincidencias, sin importar el año.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div style="display: inline-block;">
+                    <input type="text" class="form-control" placeholder=" " id="id_input" name="id_input" oninput="validateNumberInput(this)" maxlength="12" />
+                  </div>
+                  <div style="display: inline-block;">
+                    <button type="submit" class="round-button">
+                      <i class="fas fa-search fa-lg"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="right-div">
+              <div class="tooltip-container">
+                <i class="fa-solid fa-eye all-eye" onclick="submitForm()"></i>  
+                <span class="tooltip">Ver los registros del último mes.</span>
+              </div>
+            </div>
+          </div>
+        </form>
+    </div>
+    <br>
+    {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-warning">
+              {{ message }}
+          </div> 
+      {% endfor %}
+    {% endif %}
+    <br>
+    <div class="container">
+      <p style="color: #828282">Por defecto se muestran las consultas del último mes, pero puede filtrar la información de cualquier paciente sin importar la fecha.</p>
+
+    <table id="myTable">
+      <thead>
+        <tr>
+          <th style="text-align: center;">Fecha consulta</th>
+          <th style="text-align: center;">Cédula paciente</th>
+          <th style="text-align: center;">Embarazo</th>
+          <th style="text-align: center;">Tipo de embarazo</th>
+          <th style="text-align: center;">Estado</th>
+          <th style="text-align: center;">Motivo de consulta</th>
+          <th style="text-align: center;">Ver reporte</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for consulta in objects %}
+        <tr>
+          <td style="text-align: center;">{{ consulta.fecha_consulta }}</td>
+          <td style="text-align: center; font-weight: bold;"><a href="/consultas/historial/{{ consulta.idpac_id}}">{{ consulta.idpac_id|get_pacient_id }}</a></td>
+          {% get_embarazo consulta.idembarazo_id as embarazo%}
+          <td style="text-align: center;">Embarazo {{embarazo.0}}</td>
+          <td style="text-align: center;">Embarazo {{embarazo.1}}</td>
+          {% get_estado consulta.consultaid as con%}
+          <td style="text-align: center;">{{con}}</td>
+          <td style="text-align: center;">{{ consulta.motivo_consulta }}</td>
+          <td style="text-align: center;">
+            <a href="/registros/consulta/{{ consulta }}" class="eye-search">
+              <i class="fa-solid fa-eye search"></i>
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7" style="text-align: center;">No existen registros.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div id="pagination"></div>
+</div>
+<div style="height: 100px"></div>
+
+  <script>
+    var table = document.getElementById("myTable");
+var tbody = table.getElementsByTagName("tbody")[0]; // Get the tbody element
+
+var rowsPerPage = 10; // Number of rows to display per page
+var currentPage = 1; // Current page number
+
+// Calculate the total number of pages
+var totalPages = Math.ceil(table.rows.length / rowsPerPage);
+
+// Function to display the rows for the current page
+function displayRows() {
+  var start = (currentPage - 1) * rowsPerPage;
+  var end = start + rowsPerPage;
+
+  // Hide all rows in the tbody
+  for (var i = 0; i < tbody.rows.length; i++) {
+    tbody.rows[i].style.display = "none";
+  }
+
+  // Show the rows for the current page
+  for (var j = start; j < end; j++) {
+    if (tbody.rows[j]) {
+      tbody.rows[j].style.display = "";
+    }
+  }
+}
+
+// Function to generate the pagination links
+function generatePaginationLinks() {
+  var pagination = document.getElementById("pagination");
+  pagination.innerHTML = "";
+
+  // Create previous page link
+  var prevLink = document.createElement("a");
+  prevLink.href = "#";
+  prevLink.textContent = "Anterior";
+  prevLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (currentPage > 1) {
+      currentPage--;
+      displayRows();
+    }
+  });
+  pagination.appendChild(prevLink);
+
+  // Create page number links
+  for (var page = 1; page <= totalPages; page++) {
+    var pageLink = document.createElement("a");
+    pageLink.href = "#";
+    pageLink.textContent = page;
+    pageLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      currentPage = parseInt(event.target.textContent);
+      displayRows();
+    });
+    pagination.appendChild(pageLink);
+  }
+
+  // Create next page link
+  var nextLink = document.createElement("a");
+  nextLink.href = "#";
+  nextLink.textContent = "Siguiente";
+  nextLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (currentPage < totalPages) {
+      currentPage++;
+      displayRows();
+    }
+  });
+  pagination.appendChild(nextLink);
+}
+
+// Display the initial rows and generate pagination links
+displayRows();
+generatePaginationLinks();
+
+function submitForm() {
+  document.getElementById('search-form').submit();
+}
+  </script>
+
+{% endblock %}

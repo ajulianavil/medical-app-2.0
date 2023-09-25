@@ -1,0 +1,38 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/agregar_usuario.css' %}" />
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/registro2.css' %}"> {% endcomment %}
+{% endblock %}
+
+{% block content %}
+<div id="big-box">
+    <h1 style="padding-top: 120px; position: relative; color: #0796D8; font-weight: bold;">Crear nuevo usuario</h1>
+    <h6 style="font-size:small; color: #26283E; font-weight: bold;"> Elija el tipo de usuario que desea crear </h6>
+
+    <br/>
+    <div id="pick-rol">
+        <div class="rol">
+            <a href="/usuario/nuevo?rol=investigador">
+                <div class="square1">
+                </div>
+            </a>
+            <br />
+            <p style="font-size:20px; font-weight: bold; color: #26283E;">Investigador</p>
+        </div>
+        <div class="rol">
+            <a href="/usuario/nuevo?rol=médico">
+                <div class="square2">
+                </div>
+            </a>
+            <br />
+            <p style="font-size:20px; font-weight: bold; color: #26283E;">Médico</p>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>NeuroQuick</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/howto.css' %}" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan&family=Montserrat:wght@700&display=swap" rel="stylesheet"> 
+
+</head>
+
+<body>
+    <nav class="navbar navbar-light  container">
+        <!-- <a class="navbar-brand" href="#">Brand</a> -->
+        {% comment %} <img class="logo" src="{% static 'images/medicApp.png' %}" alt="medicAppLogo" /> {% endcomment %}
+
+        <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/landing">Inicio </span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link menuItem" href="/aboutUs">Sobre nosotros</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link menuItem" href="#">Registro <span class="sr-only">(current)</a>
+        </li>
+        <li class="nav-item">
+        </li>
+    </ul>
+    {% comment %} <a class="btn btn-primary" href="login">Iniciar sesión</a> {% endcomment %}
+    <a href="login" class="loginLink"> Iniciar sesión </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        </div>
+    </nav>
+        <div class="all-content">
+            <div class="centered-content">
+                <h1 style="font-weight: bold; color: #0796D8;">¿Deseas registrarte?</h1>
+                <img class="aboutUsImg" src="{% static 'images/medicApp_face.png' %}">
+                <p style="font-weight: lighter; color: #909090; text-align: center;">Los nuevos usuarios sólo pueden ser registrados por un administrador.</p>
+                <p style="font-weight: bold; text-align: center;">Por favor, comunícate con un administrador para crear tu cuenta o contáctanos vía neuroapp.contacto@gmail.com.</p>
+                <p style="font-weight: light; text-align: center; color: #909090;">Si ya cuentas con permisos de administrador, por favor <a style="font-weight: bold; text-align: center; color: #0796D8;" href="/login">inicia sesión</a> para poder realizar un nuevo registro.</p>
+            </div>
+        </div>
+
+    {% comment %} <footer class="footer-distributed">
+
+        <div class="footer-left">
+
+            <h3>Company<span>logo</span></h3>
+
+            <p class="footer-links">
+                <a href="#">Home</a>
+                ·
+                <a href="#">Blog</a>
+                ·
+                <a href="#">Pricing</a>
+                ·
+                <a href="#">About</a>
+                ·
+                <a href="#">Faq</a>
+                ·
+                <a href="#">Contact</a>
+            </p>
+
+            <p class="footer-company-name">Company Name © 2015</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>21 Revolution Street</span> Paris, France</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+1 555 123456</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@company.com">support@company.com</a></p>
+            </div>
+
+        </div> 
+
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>Andrea Villalba - Laura Serrano</span>
+            </p>
+
+            {% comment %} <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+
+            </div> 
+
+        </div>
+
+    </footer>{% endcomment %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.tutorialzine.com/misc/enhance/v2.js" async=""></script>
+</body>
+</html>

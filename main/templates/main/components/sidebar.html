@@ -1,0 +1,103 @@
+{% load static %}
+<header>
+    <header class="header" id="header">
+        <div class="header_toggle">
+            <i class="bx bx-menu" id="header-toggle"></i>
+        </div>
+        <div>
+
+            <div class="text-black-50 float-end sidebar-name">{{current_user.user_name}} {{current_user.user_lastname}}</div>
+            
+            {% if current_user.userrol == 'investigador'%} 
+            <div class="text-black-50 float-end sidebar-rol">Investigador</div>
+            <div class="header_img">
+                <a href="/profile">
+                    <img src="{% static 'images/inv-avatar.png' %}" alt="" />
+                </a>
+            </div>
+            {%endif%}
+            {% if current_user.userrol == 'médico'%} 
+            <div class="text-black-50 float-end sidebar-rol">Médico {% if current_user.is_superuser == True %} - Admin {%endif%}</div> 
+            <div class="header_img">
+                <a href="/profile">
+                    <img src="{% static 'images/medical-avatar.png' %}" alt="" />
+                </a>
+            </div>
+            {%endif%}
+            {% if current_user.userrol != 'médico' and current_user.userrol != 'investigador'%} 
+            <div class="text-black-50 float-end sidebar-rol">Administrador</div>
+            <div class="header_img">
+                <a href="/profile">
+                    <img src="{% static 'images/admin-avatar.png' %}" alt="" style="width: 30px" />
+                </a>
+            </div>
+            {%endif%}
+        </div>
+    </header>
+
+</header>
+
+<div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+        <div>
+            <a href="/" class="nav_logo">
+                <i class="fa-solid fa-stethoscope nav_logo-icon"></i>
+                <span class="nav_logo-name">Ultrasonido</span>
+            </a>
+            <div class="nav_list">
+                <a href="/" class="nav_link">
+                    <i class="fas fa-home nav_icon"></i>
+                    <span class="nav_name">Inicio</span>
+                </a>
+                {% if current_user.userrol != 'investigador'%} 
+                <a href="/consultas/nueva" class="nav_link">
+                    <i class="fa-solid fa-plus nav_icon"></i>
+                    <span class="nav_name">Nueva consulta</span>
+                </a>
+                {% endif %}
+                {% if current_user.userrol != 'investigador'%} 
+                
+                <a href="/registros" class="nav_link">
+                    <i class="fa-solid fa-magnifying-glass nav_icon"></i>
+                    <span class="nav_name">Buscar consulta</span>
+                </a>
+                {%endif%}
+                <a href="/repositorio" class="nav_link">
+                    <i class="fa-solid fa-database nav_icon"></i>                    
+                    <span class="nav_name">Ir al repositorio</span>
+                </a>
+                
+                {% if current_user.is_superuser == True%} 
+                <a href="/usuario/nuevo" class="nav_link">
+                    <i class="fa-sharp fa-solid fa-pen-to-square nav_icon"></i>
+                    <span class="nav_name">Registar un usuario</span>
+                </a>
+                {%endif%}
+                {% if current_user.is_superuser == True%} 
+                <a href="/usuario/listado" class="nav_link">
+                    <i class="fa-solid fa-list nav_icon"></i>
+                    <span class="nav_name">Ver todos los usuarios</span>
+                </a>
+                {%endif%}
+                <a href="/profile" class="nav_link">
+                    <i class="fa-solid fa-user nav_icon"></i>
+                    <span class="nav_name">Ver perfil</span>
+                </a>
+                {% comment %} <a href="#" class="nav_link">
+                    <i class="fa-solid fa-book nav_icon"></i>
+                    <span class="nav_name">Manual de uso</span>
+                </a>
+                <a href="#" class="nav_link">
+                    <i class="fa-solid fa-circle-info nav_icon"></i>
+                    <span class="nav_name">Soporte técnico</span>
+                </a> {% endcomment %}
+                
+            </div>
+        </div>
+        <a href="{% url 'logout' %}" class="nav_link">
+            <i class="fa-solid fa-right-from-bracket nav_icon"></i>
+            <span class="nav_name">Salir de la cuenta</span>
+        </a> 
+    </nav>
+</div>
+<script src="{% static 'js/script.js' %}"></script>

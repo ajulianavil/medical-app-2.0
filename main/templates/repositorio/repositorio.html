@@ -1,0 +1,409 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/repositorio.css' %}" />
+<script src="{% static 'js/validations.js' %}"></script>
+<script src="{% static 'js/repositorio_filter.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+<br />
+<br />
+<h1 style="font-weight: bold; color: #0796D8">Repositorio</h1>
+<p style="font-weight: bold;">Por favor, ingrese sus datos de interés para filtrar la búsqueda.</p>
+
+<div class="mid-container">
+  <div class="left-div">
+<div class="box container" style="height: 100%; margin-bottom:20px">
+  <form class="report-form" method="POST">
+    {% csrf_token %}
+        <div class="row">
+          <div class="col-3">
+            <strong class="col-md-auto label"> Rango de edad gestacional</strong>
+            <select id="ga_input" name="ga_input">
+              <option value="15"{% if filtros.ga_input == '15' %}selected{% endif %}>Semana 15</option>
+              <option value="16"{% if filtros.ga_input == '16' %}selected{% endif %}>Semana 16</option>
+              <option value="17"{% if filtros.ga_input == '17' %}selected{% endif %}>Semana 17</option>
+              <option value="18"{% if filtros.ga_input == '18' %}selected{% endif %}>Semana 18</option>
+              <option value="19"{% if filtros.ga_input == '19' %}selected{% endif %}>Semana 19</option>
+              <option value="20"{% if filtros.ga_input == '20' %}selected{% endif %}>Semana 20</option>
+              <option value="21"{% if filtros.ga_input == '21' %}selected{% endif %}>Semana 21</option>
+              <option value="22"{% if filtros.ga_input == '22' %}selected{% endif %}>Semana 22</option>
+              <option value="23"{% if filtros.ga_input == '23' %}selected{% endif %}>Semana 23</option>
+              <option value="24"{% if filtros.ga_input == '24' %}selected{% endif %}>Semana 24</option>
+              <option value="25"{% if filtros.ga_input == '25' %}selected{% endif %}>Semana 25</option>
+              <option value="26"{% if filtros.ga_input == '26' %}selected{% endif %}>Semana 26</option>
+              <option value="27"{% if filtros.ga_input == '27' %}selected{% endif %}>Semana 27</option>
+              <option value="28"{% if filtros.ga_input == '28' %}selected{% endif %}>Semana 28</option>
+              <option value="29"{% if filtros.ga_input == '29' %}selected{% endif %}>Semana 29</option>
+              <option value="30"{% if filtros.ga_input == '30' %}selected{% endif %}>Semana 30</option>
+              <option value="31"{% if filtros.ga_input == '31' %}selected{% endif %}>Semana 31</option>
+              <option value="32"{% if filtros.ga_input == '32' %}selected{% endif %}>Semana 32</option>
+              <option value="33"{% if filtros.ga_input == '33' %}selected{% endif %}>Semana 33</option>
+              <option value="34"{% if filtros.ga_input == '34' %}selected{% endif %}>Semana 34</option>
+              <option value="35"{% if filtros.ga_input == '35' %}selected{% endif %}>Semana 35</option>
+              <option value="36"{% if filtros.ga_input == '36' %}selected{% endif %}>Semana 36</option>
+              <option value="37"{% if filtros.ga_input == '37' %}selected{% endif %}>Semana 37</option>
+              <option value="38"{% if filtros.ga_input == '38' %}selected{% endif %}>Semana 38</option>
+              <option value="39"{% if filtros.ga_input == '39' %}selected{% endif %}>Semana 39</option>
+              <option value="40"{% if filtros.ga_input == '40' %}selected{% endif %}>Semana 40</option>
+            </select>
+            {% comment %} <label class="labels" for="{{ form.subject.id_for_label }}">{{ form.ga.label }}</label> {%endcomment %}
+          </div>
+          <div class="col-2">
+            </br>
+            <select id="ga_input_final" name="ga_input_final">
+              <option value="15"{% if filtros.ga_input_final == '15' %}selected{% endif %}>Semana 15</option>
+              <option value="16"{% if filtros.ga_input_final == '16' %}selected{% endif %}>Semana 16</option>
+              <option value="17"{% if filtros.ga_input_final == '17' %}selected{% endif %}>Semana 17</option>
+              <option value="18"{% if filtros.ga_input_final == '18' %}selected{% endif %}>Semana 18</option>
+              <option value="19"{% if filtros.ga_input_final == '19' %}selected{% endif %}>Semana 19</option>
+              <option value="20"{% if filtros.ga_input_final == '20' %}selected{% endif %}>Semana 20</option>
+              <option value="21"{% if filtros.ga_input_final == '21' %}selected{% endif %}>Semana 21</option>
+              <option value="22"{% if filtros.ga_input_final == '22' %}selected{% endif %}>Semana 22</option>
+              <option value="23"{% if filtros.ga_input_final == '23' %}selected{% endif %}>Semana 23</option>
+              <option value="24"{% if filtros.ga_input_final == '24' %}selected{% endif %}>Semana 24</option>
+              <option value="25"{% if filtros.ga_input_final == '25' %}selected{% endif %}>Semana 25</option>
+              <option value="26"{% if filtros.ga_input_final == '26' %}selected{% endif %}>Semana 26</option>
+              <option value="27"{% if filtros.ga_input_final == '27' %}selected{% endif %}>Semana 27</option>
+              <option value="28"{% if filtros.ga_input_final == '28' %}selected{% endif %}>Semana 28</option>
+              <option value="29"{% if filtros.ga_input_final == '29' %}selected{% endif %}>Semana 29</option>
+              <option value="30"{% if filtros.ga_input_final == '30' %}selected{% endif %}>Semana 30</option>
+              <option value="31"{% if filtros.ga_input_final == '31' %}selected{% endif %}>Semana 31</option>
+              <option value="32"{% if filtros.ga_input_final == '32' %}selected{% endif %}>Semana 32</option>
+              <option value="33"{% if filtros.ga_input_final == '33' %}selected{% endif %}>Semana 33</option>
+              <option value="34"{% if filtros.ga_input_final == '34' %}selected{% endif %}>Semana 34</option>
+              <option value="35"{% if filtros.ga_input_final == '35' %}selected{% endif %}>Semana 35</option>
+              <option value="36"{% if filtros.ga_input_final == '36' %}selected{% endif %}>Semana 36</option>
+              <option value="37"{% if filtros.ga_input_final == '37' %}selected{% endif %}>Semana 37</option>
+              <option value="38"{% if filtros.ga_input_final == '38' %}selected{% endif %}>Semana 38</option>
+              <option value="39"{% if filtros.ga_input_final == '39' %}selected{% endif %}>Semana 39</option>
+              <option value="40"{% if filtros.ga_input_final == '40' or not filtros.ga_input_final %}selected{% endif %}>Semana 40</option>
+              <!-- <option value="40" selected>Semana 40</option> -->
+            </select> 
+          </div>
+          <div class="col-3">
+            <div class="tooltip-container-right">
+              <strong class="col-md-auto label"> Fecha de toma de exámen</strong>
+              <i class="fa-solid fa-circle-question" data-tooltip="Por defecto se filtra por los reportes del último año."></i>
+              <span class="tooltip-right">Por defecto, se filtra por los reportes del último trimestre. (Para ver histórico: junio 2023)</span>
+            </div>
+            <input type="date" id="start_date" name="start_date">
+          </div>
+          <div class="col-3">
+            </br>
+            <input type="date" id="end_date" name="end_date">
+          </div>
+        </div>
+        <br />
+      <div class="row">
+          <div class="col-4">
+            <div class="tooltip-container">
+              <strong class="col-md-auto label">Medición</strong>
+              <i class="fa-solid fa-circle-question" data-tooltip="Use este filtro si desea observar un diagnóstico en específico, para ello seleccione la medición que corresponda y a continuación un diagnóstico."></i>
+              <span class="tooltip">Use este filtro si desea observar un diagnóstico en específico, para ello seleccione la medición y a continuación un diagnóstico.</span>
+            </div>
+            <select id="med_input" name="med_input" onchange="updateDiagnosisOptions()">
+              <option value="todas" {% if not filtros.med_input %}selected{% endif %}>---</option>
+              <option value="hc_hadlock"  {% if filtros.med_input == 'hc_hadlock' %}selected{% endif %}>HC_HADLOCK</option>
+              <option value="bpd_hadlock"   {% if filtros.med_input == 'bpd_hadlock' %}selected{% endif %}>BPD_HADLOCK</option>
+              <option value="csp"   {% if filtros.med_input == 'csp' %}selected{% endif %}>CSP</option>
+              <option value="cm"   {% if filtros.med_input == 'cm' %}selected{% endif %} >CM</option>
+              <option value="vp"  {% if filtros.med_input == 'vp' %}selected{% endif %} >VP</option>
+              <option value="va"   {% if filtros.med_input == 'va' %}selected{% endif %} >VA</option>
+              <option value="cereb_hill"  {% if filtros.med_input == 'cereb_hill' %}selected{% endif %}>CEREB_HILL</option>
+              <option value="afi"  {% if filtros.med_input == 'afi' %}selected{% endif %} >AFI</option>
+              <option value="efw"  {% if filtros.med_input == 'efw' %}selected{% endif %} >EFW</option>
+            </select>
+          </div>
+          <div class="col-4">
+            <div class="tooltip-container" style="display: none" id="diagnosis_label">
+              <strong  class="col-md-auto label" > Diagnóstico </strong>
+              <i class="fa-solid fa-circle-question" data-tooltip="Seleccione el diagnóstico por el que desee filtrar o elija '---' para eliminar el filtro."></i>
+              <span class="tooltip">Seleccione el diagnóstico por el que desee filtrar o elija '---' para eliminar el filtro.</span>
+            </div>
+            <div id="selectedDiagnosis" data-my-value="{{filtros.diagnosis_input|safe}}"></div>
+            <select id="diagnosis_input" name="diagnosis_input" onchange="updateMedOptions()" style="display: none">
+              <option value="todos">---</option>
+            </select>
+          </div>
+        
+          <div class="col-md-auto">
+            <button class="btn search-button" type="submit" style="padding: 0px 30px"><i class="fa fa-search"></i></button>
+          </div>
+      </div>
+    </div>
+  </div>
+    </form>
+    <div class="right-div">
+      <div class="col all-div">
+        <div class="col all-div-inside">
+          <div class="tooltip-container-small">
+            <i class="fa-solid fa-eye all-eye" onclick="window.location.href='{% url 'repositorio' %}'"></i>  
+            <span class="tooltip-small">Ver todos los registros del último trimestre.</span>
+          </div>
+          {% comment %} <i class="fa-solid fa-eye all-eye" style=""></i>
+          <button type="button" class="all-button" onclick="window.location.href='{% url 'repositorio' %}'"> Ver todos </button> {% endcomment %}
+        </div>
+      </div>
+    </div>  
+  </div>
+
+<br>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-warning">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<br>
+
+
+<div class="container">
+  <table id="myTable">
+    <thead>
+      <tr>
+        {% comment %} <th style="text-align: center;">Cédula</th>
+        <th style="text-align: center;">Apellido</th> {% endcomment %}
+        <th style="text-align: center;">GA</th>
+        <th style="text-align: center;">Fecha consulta</th>
+        <th style="text-align: center;">HC_HADLOCK</th>
+        <th style="text-align: center;">Valor</th>
+        <th style="text-align: center;">BPD_HADLOCK </th>
+        <th style="text-align: center;">Valor</th>
+        <th style="text-align: center;">CSP </th>
+        <th style="text-align: center;">Valor</th>
+        <th style="text-align: center;">CM </th>
+        <th style="text-align: center;">Valor</th>
+        <th style="text-align: center;">VP </th>
+        <th style="text-align: center;">Valor </th>
+        <th style="text-align: center;">VA </th>
+        <th style="text-align: center;">Valor </th>
+        <th style="text-align: center;">CEREB_HILL </th>
+        <th style="text-align: center;">Valor </th>
+        <th style="text-align: center;">AFI </th>
+        <th style="text-align: center;">Valor </th>
+        <th style="text-align: center;">EFW </th>
+        <th style="text-align: center;">Valor </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in objects %}
+      <tr>
+        <td style="text-align: center;">{{ obj.ga_reporte }}</td>
+        <td style="text-align: center;">{{ obj.report_date }}</td>
+        <td style="text-align: center;">{{ obj.diagnostico.hc_hadlock }}</td>
+        <td style="text-align: center;">{{ obj.reporte.hc_hadlock_1 }}</td>
+        <td style="text-align: center;">{{ obj.diagnostico.bpd_hadlock }}</td>
+        <td style="text-align: center;">{{ obj.reporte.bpd_hadlock_1 }}</td>
+        <td style="text-align: center;">{{ obj.diagnostico.csp }}</td>
+        <td style="text-align: center;">{{ obj.reporte.csp_1 }}</td>
+        <td style="text-align: center;">{{ obj.diagnostico.cm }}</td>
+        <td style="text-align: center;">{{ obj.reporte.cm_1 }}</td>
+        <td style="text-align: center;">{{ obj.diagnostico.vp }}</td>
+        <td style="text-align: center;">{{ obj.reporte.vp_1 }}</td>
+        <td style="text-align: center;">{{ obj.diagnostico.va }}</td>
+        <td style="text-align: center;">{{ obj.reporte.va_1 }}</td>
+        <td style="text-align: center;">{{ obj.diagnostico.cereb_hill }}</td>
+        <td style="text-align: center;">{{ obj.reporte.cereb_hill_1 }}</td>
+        <td style="text-align: center;">{{ obj.diagnostico.afi }}</td>
+        <td style="text-align: center;">{{ obj.reporte.afi }}</td>
+        <td style="text-align: center;">{{ obj.diagnostico.efw }}</td>
+        <td style="text-align: center;">{{ obj.reporte.efw }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+<br />
+<br />
+<div>
+  <button id="sendDataButton" class="btn download-button" style="width: 200px !important; float: left; margin-bottom: 20px">Descargar .CSV</button>
+  <div id="pagination"></div>
+</div>
+{% comment %} <div style="height: 100px"></div> {% endcomment %}
+<script>
+  updateDiagnosisOptions();
+  var select1 = document.getElementById('ga_input');
+  var select2 = document.getElementById('ga_input_final');
+
+  // Add event listener to select1
+  select1.addEventListener('change', function() {
+    var selectedValue = parseInt(select1.value);
+
+    // Hide options in select2 based on selectedValue
+    for (var i = 0; i < select2.options.length; i++) {
+      var optionValue = parseInt(select2.options[i].value);
+
+      if (optionValue < selectedValue) {
+        select2.options[i].style.display = 'none';
+      } else {
+        select2.options[i].style.display = 'block';
+      }
+    }
+  });
+
+  // Add event listener to select2
+  select2.addEventListener('change', function() {
+    var selectedValue = parseInt(select2.value);
+
+    // Hide options in select1 based on selectedValue
+    for (var i = 0; i < select1.options.length; i++) {
+      var optionValue = parseInt(select1.options[i].value);
+
+      if (optionValue > selectedValue) {
+        select1.options[i].style.display = 'none';
+      } else {
+        select1.options[i].style.display = 'block';
+      }
+    }
+  });
+  // ----------- SCRIPT - FECHAS
+  // Get the current date
+  var currentDate = new Date().toISOString().split('T')[0];
+  var lastYearDate = new Date();
+
+  {% comment %} lastYearDate.setFullYear(lastYearDate.getFullYear() - 1);
+  var formattedDate = lastYearDate.toISOString().split('T')[0]; {% endcomment %}
+
+  lastYearDate.setMonth(lastYearDate.getMonth() - 3);
+  var formattedDate = lastYearDate.toISOString().split('T')[0];
+
+  var filtros = "{{ filtros|safe }}";
+  var start_date = "{{ filtros.start_date|safe }}";
+  var end_date = "{{ filtros.end_date|safe }}";
+  if(filtros){
+    formattedDate= new Date(start_date).toISOString().split('T')[0];
+     currentDate = new Date(end_date).toISOString().split('T')[0];
+  }
+  // Set the default value of the input field
+  document.getElementById('start_date').value = formattedDate;
+  // Set the default value of the input field
+  document.getElementById('end_date').value = currentDate;
+  //  ---------- SCRIPT PAGINACION
+  var table = document.getElementById("myTable");
+  var tbody = table.getElementsByTagName("tbody")[0]; // Get the tbody element
+  var rowsPerPage = 20; // Number of rows to display per page
+  var currentPage = 1; // Current page number
+  // Calculate the total number of pages
+  var totalPages = Math.ceil(table.rows.length / rowsPerPage);
+  // Function to display the rows for the current page
+  function displayRows() {
+    var start = (currentPage - 1) * rowsPerPage;
+    var end = start + rowsPerPage;
+
+    // Hide all rows in the tbody
+    for (var i = 0; i < tbody.rows.length; i++) {
+      tbody.rows[i].style.display = "none";
+    }
+
+    // Show the rows for the current page
+    for (var j = start; j < end; j++) {
+      if (tbody.rows[j]) {
+        tbody.rows[j].style.display = "";
+      }
+    }
+  }
+  // Function to generate the pagination links
+  function generatePaginationLinks() {
+    var pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+    // Create previous page link
+    var prevLink = document.createElement("a");
+    prevLink.href = "#";
+    prevLink.textContent = "Anterior";
+    prevLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      if (currentPage > 1) {
+        currentPage--;
+        displayRows();
+      }
+    });
+    pagination.appendChild(prevLink);
+    // Create page number links
+    for (var page = 1; page <= totalPages; page++) {
+      var pageLink = document.createElement("a");
+      pageLink.href = "#";
+      pageLink.textContent = page;
+      pageLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        currentPage = parseInt(event.target.textContent);
+        displayRows();
+      });
+      pagination.appendChild(pageLink);
+    }
+    // Create next page link
+    var nextLink = document.createElement("a");
+    nextLink.href = "#";
+    nextLink.textContent = "Siguiente";
+    nextLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      if (currentPage < totalPages) {
+        currentPage++;
+        displayRows();
+      }
+    });
+    pagination.appendChild(nextLink);
+  }
+  // Display the initial rows and generate pagination links
+  displayRows();
+  generatePaginationLinks();
+</script>
+
+<script>
+  // Get the button element
+  var sendDataButton = document.getElementById('sendDataButton');
+  // Add a click event listener to the button
+  sendDataButton.addEventListener('click', function () {
+    // Get all the rows in the table body
+    var tableBody = document.querySelector('#myTable tbody');
+    var rows = tableBody.getElementsByTagName('tr');
+    // Create an array to store the data
+    var dataArray = [];
+    // Iterate over the rows and extract the data
+    dataArray.push(['GA', 'Fecha reporte', 'HC_HADLOCK', 'Valor', 'BPD_HADLOCK', 'Valor', 'CSP', 'Valor', 'CM', 'Valor', 'VP', 'Valor', 'VA', 'Valor', 'CEREB_HILL', 'Valor', 'AFI', 'Valor', 'EFW', 'Valor',
+    ]);
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      // Create an object to store the row data
+      var rowData = [];
+      // Get the cells in the row
+      var cells = row.getElementsByTagName('td');
+      rowData.push(cells[0].innerText);
+      rowData.push(cells[1].innerText);
+      rowData.push(cells[2].innerText);
+      rowData.push(cells[3].innerText);
+      rowData.push(cells[4].innerText);
+      rowData.push(cells[5].innerText);
+      rowData.push(cells[6].innerText);
+      rowData.push(cells[7].innerText);
+      rowData.push(cells[8].innerText);
+      rowData.push(cells[9].innerText);
+      rowData.push(cells[10].innerText);
+      rowData.push(cells[11].innerText);
+      rowData.push(cells[12].innerText);
+      rowData.push(cells[13].innerText);
+      rowData.push(cells[14].innerText);
+      rowData.push(cells[15].innerText);
+      rowData.push(cells[16].innerText);
+      rowData.push(cells[17].innerText);
+      rowData.push(cells[18].innerText);
+      rowData.push(cells[19].innerText);
+      // Add the row data to the array
+      dataArray.push(rowData);
+    }
+ 
+    let csvContent = "data:text/csv;charset=utf-8,"
+      + dataArray.map(e => e.join(",")).join("\n");
+
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
+  });
+</script>
+
+
+{% endblock %}

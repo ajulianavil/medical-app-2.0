@@ -1,0 +1,145 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load my_filters %}
+{% block head %}
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/> {% endcomment %}
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/ejemplo.css' %}"/> {% endcomment %}
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/main_fonts.css' %}"/> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/> 
+
+    <script src="https://kit.fontawesome.com/5bdb3c603b.js" crossorigin="anonymous"></script>
+
+{% endblock %}
+
+{% block content %}
+    {% include 'main/components/greeting.html' %}
+    <br>
+    <br>
+    {%if current_user.userrol == 'médico' %}
+
+        <h4 class="text">Realizar una nueva consulta		
+            
+            <a class="btn text-white" href="consultas/nueva" role="button">
+            <i class="fas fa-plus" style="font-size: xx-large"></i></a>
+            {% comment %} <span style="color: #909090; font-size: 15px; font-weight: bold; margin-top: 100px"> </br>Para generar un diagnóstico necesitará a la mano el documento .txt extraído del ultrasonido.</span> {% endcomment %}
+        </h4>
+        <br>
+        <br>
+        {% if current_user.user_identification|get_last_consult %}
+        <h4 class="text">Ver último diagnóstico
+            <a class="btn text-white" href="registros/consulta/{{current_user.user_identification|get_last_consult}}" role="button">
+                <i class="fa-regular fa-eye" style="font-size: xx-large"></i>
+            </a>
+            {% comment %} <span style="color: #909090; font-size: 15px; font-weight: bold; margin-top: 100px"> </br>Para generar un diagnóstico necesitará a la mano el documento .txt extraído del ultrasonido.</span> {% endcomment %}
+        </h4>
+        {%endif%}
+    {%endif%}
+    </div>
+
+    {%if current_user.userrol == 'médico' %}
+    
+    <div class="container-fluid col-sm" style="padding: 50px">
+
+        <div class="container-fluid col-sm" style="padding-top: 20px; font-color: #26283E">
+            {% comment %} {% if current_user.userrol == 'médico' %}  {% endcomment %}
+            <div class="container-fluid row">
+                <h2 class="mb-4">Más información</h2>
+                <p style="font-weight: bold; font-size: medium; font-color: #26283E">Resumen mensual </p>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col" style="display: flex; align-items: center; justify-content: space-around;">
+                    <div class="card card1">
+                        <div class="card-body">
+                            <img src="{% static 'images/people.png' %}" class="img-fl" alt="Nuevo investigador">
+                            <h5 class="card-title">
+                                Total pacientes
+                            </h5>
+                            <button type="button" class="inside-card-button" style="background-color: #52CBF5;">
+                                {{ current_user.user_identification|total_pacientes }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="display: flex;
+                align-items: center;
+                justify-content: space-around;">
+                    <div class="card card1">
+                        
+                        <div class="card-body">
+                            <img src="{% static 'images/check.png' %}" class="img-fl" alt="Nuevo investigador">
+                            <h5 class="card-title">
+                                Fetos sanos
+                            </h5>
+                            <button type="button" class="inside-card-button" style="background-color: #52CBF5;">
+                                {{ current_user.user_identification|total_fetos}}
+
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="display: flex;
+                align-items: center;
+                justify-content: space-around;">
+                    <div class="card card1">
+                        {% comment %} <i class="fa-solid fa-person" style="color: #0796d8; scale: 170% "></i><br/> {% endcomment %}
+                        
+                        <div class="card-body">
+                            <img src="{% static 'images/track.png' %}" class="img-fl" alt="Nuevo investigador">
+                            <h5 class="card-title">
+                                Fetos con diagnóstico
+                            </h5>
+                            <button type="button" class="inside-card-button" style="background-color: #52CBF5;">
+                                {{ current_user.user_identification|total_anormales}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card card2">
+                <div class="card-body">
+                    <h2 style="color: #26283E"> Repositorio de datos </h2>
+                    <h5 class="card-description" >Filtre y descargue información sobre los datos clínicos almacenados. </h5>
+                    <button  class="card-text-button" style="width: 200px" onclick="window.location.href='{% url 'repositorio' %}'">
+                        Ir al repositorio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endif %}
+
+</div>
+
+{% if current_user.userrol == 'investigador'%}
+<div class="containerx" style="display: flex;
+justify-content: center;
+align-items: center;">
+    <div class="card3" style="    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 50px 100px 50px 100px;
+    text-align: left;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border: none;
+    min-width: 800px;
+    max-width: 100%;
+    height: 500px;">
+      <!-- Card content goes here -->
+      <span style="color: #26283E; font-size: xx-large; font-weight: bold; margin: 0px">Saludos, <b style="color: #0796D8; font-size: xx-large; font-weight: bold; margin: 0px ">{{current_user.user_name}} {{current_user.user_lastname}}</b></span>
+            </br><span style="color: #26283E; font-size: x-large; font-weight: lighter; ">Tenga un buen día</span>
+            </br></br>
+            <span style="color: #909090; font-size: 15px; font-weight: bold; margin-top: 100px">Acceda al repositorio de datos de anomalías del sistema </br>nervioso central fetal</span>
+        </br></br>
+            <button type="button" class="card-text-button" style="width: 200px" onclick="window.location.href='{% url 'repositorio' %}'">
+                Ir a repositorio
+            </button>    
+            <img src="{% static 'images/greetings-inv.png' %}" style="width: 250px;
+            transform: translate(200px, -153px); margin: 0px 10px 0px 10px" alt="Nuevo investigador"> 
+        </div>
+    </div>
+  </div>
+{%endif%}
+
+
+{% endblock %}

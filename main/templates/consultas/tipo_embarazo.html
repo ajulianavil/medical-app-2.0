@@ -1,0 +1,47 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/tipo_embarazo.css' %}" />
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/registro2.css' %}"> {% endcomment %}
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div> 
+{% endfor %}
+{% endif %}
+<div id="big-box">
+
+    <h1 style="padding-top: 120px; position: relative; color: #0796D8; font-weight: bold;">Tipo embarazo</h1>
+    <h4 style="font-size:medium; color: #26283E; font-weight: bold;"> ¿A qué tipo de embarazo realizará la consulta? </h4>
+
+    <br/>
+    <div id="pick-rol">
+        <div class="rol">
+            <a href="/consultas/nueva/unico">
+                <div class="square1">
+                </div>
+            </a>
+            <br />
+            <p style="font-size:20px; font-weight: bold; color: #26283E;">Embarazo con feto único</p>
+        </div>
+        <div class="rol">
+            <a href="/consultas/nueva/multiple">
+                <div class="square2">
+                </div>
+            </a>
+            <br />
+            <p style="font-size:20px; font-weight: bold; color: #26283E; margin: 0px;">Embarazo múltiple</p>
+            <p style="font-size:15px; font-weight: medium; color: #26283E;">(Dos o más fetos)</p>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

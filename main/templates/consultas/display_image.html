@@ -1,0 +1,87 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_fonts.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/upload_file.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/loading.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.css' %}">
+
+    <script src="https://kit.fontawesome.com/5bdb3c603b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script> {% endcomment %}
+
+    <script src="{% static 'js/upload_file.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div> 
+    {% endfor %}
+{% endif %}
+<div style="    text-align: center;
+padding: 50px;">
+</br>
+    <h1 style="font-weight: bold; color: #0796D8">Imágenes </h1>
+    <h5 style="font-weight: bold; color: #26283E"> Aquí puede ver todas las imágenes adjuntas a su reporte. </h5>
+    </br>
+        <div id="loading-icon">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>   
+    </p>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if not image_data %} No hay imágenes para mostrar {%endif%}
+            {% for img in image_data %}
+                {% if forloop.counter0|divisibleby:3 %}
+                    <div class="row">
+                {% endif %}
+                <div class="col-md-4">
+                    <a href="{{ img }}"  data-lightbox="example-gallery" class="col-sm-4">
+                        <img style="width: 200px;" src="{{ img }}" alt="Image" class="img-fluid">
+                    </a>
+                    <p>Imagen: {{ forloop.counter }}</p>
+                </div>
+                {% if forloop.counter|divisibleby:3 or forloop.last %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div style="display:flex; justify-content: flex-end; padding: 10px 50px">
+       <button id="submitBtn" class="btn goback-button" style="width: 200px;" onclick="goBack()">Volver a reporte</button>
+    </div>
+</div>
+
+<script src="{% static 'js/lightbox.js' %}"></script>
+<script>
+
+    function goBack() {
+        window.history.back();
+      }
+
+      $(document).ready(function() {
+        lightbox.option({
+          'resizeDuration': 200,
+          'wrapAround': true
+        });
+      });
+
+    var loadingIcon = document.getElementById("loading-icon");
+
+    function activateLoader(){
+        loadingIcon.style.display = "block";
+    }
+
+    lightbox.option({
+        'resizeDuration': 200,
+        'wrapAround': true
+      });
+</script>
+
+{% endblock %}

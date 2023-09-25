@@ -1,0 +1,358 @@
+.box {
+    background-color: #fff;
+    height: 800px;
+    border-radius: 20px;
+    padding: 30px 20px 20px 30px;
+}
+
+.row {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    margin: 0;
+    gap: 10px;
+}
+.linea {
+    width: fit-content;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    margin: 0;
+    gap: 10px;
+}
+.col{
+    padding: 0;
+    margin:0;
+}
+ .col-md-auto{
+    padding: 0;
+    margin:0;
+} 
+
+hr {
+    border-top: 2px solid black;
+    color: black;
+  }
+
+.label{
+    font-size: small;
+}
+
+input #med{
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    width: 100px;
+}
+#med{
+    background: #F1F0F7;
+    padding: 3px 0px 3px 10px;
+    border-radius: 5px;
+}
+input[type="text"]:disabled {
+    background: #F1F0F7;
+    border: none;
+    padding: 3px 0px 3px 10px;
+    color: #909090;
+    border-radius: 5px;
+  }
+
+input[type="text"]:enabled {
+background: #eeeeee;
+border: 1px solid #0796D8;
+padding: 3px 0px 3px 10px;
+color: #26283E;
+border-radius: 5px;
+}
+
+input[type="text"]:focus {
+    border: 1px solid #0796D8;
+    }
+
+.custom-area:disabled{
+    background: #d9d9d9;
+    border: 1px solid #0796D8;;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 3px 0px 3px 10px;
+    width: 100%;
+    color: rgba(38, 40, 62, 0.6);
+}
+
+.custom-area{
+    background: #F4F4F4;
+    border: 1px solid #0796D8;;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 3px 0px 3px 10px;
+    width: 100%;
+    color: #26283E;
+    overflow: auto
+}
+
+.custom-area::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+  .custom-area::-webkit-scrollbar-track {
+    background: #ffffff; /* Color of the track */
+  }
+  
+  .custom-area::-webkit-scrollbar-thumb {
+    background-color: #888888; /* Color of the thumb */
+    border-radius: 4px; /* Rounded corners of the thumb */
+  }
+  
+  .custom-area::-webkit-scrollbar-thumb:hover {
+    background-color: #555555; /* Color of the thumb on hover */
+  }
+  
+
+#description {
+    border-radius: 15px;
+    background: #F1F0F7;
+    border: none;
+    /* color: #909090; */
+    resize: none;
+    color: #26283E; 
+    overflow: auto; 
+    height: 500px; width: 100%; padding: 30px !important; 
+}
+
+.title{
+    font-size: 20px; font-weight: bold;
+}
+
+.diagnosis{
+    font-size: 16px;
+    display: inline-block;
+    font-weight: bold;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, span {
+    font-family: 'League Spartan', sans-serif;
+}
+
+/* Style the scrollbar */
+#description::-webkit-scrollbar {
+    width: 10px; /* Width of the entire scrollbar */
+}
+  
+#description::-webkit-scrollbar-track {
+background: #f1f1f1; /* Color of the tracking area */
+}
+  
+#description::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scroll thumb */
+    border-radius: 20px; /* Roundness of the scroll thumb */
+}
+  
+#description::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the scroll thumb on hover */
+}
+
+.analisis-button{
+    width: 200px !important; background-color: #9FA0D0;
+    font-family: 'League Spartan', sans-serif;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    height: 40px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    transition: all .5s ease;
+}
+
+.analisis-button:hover{
+    background-color: #6889D2;
+    color: white;
+    transform: scale(1.03);
+}
+
+.imagenes-button{
+    width: 200px !important; background-color: #9FA0D0;
+    font-family: 'League Spartan', sans-serif;
+    margin: 0px 6px 0px 10px;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    height: 40px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    transition: all .5s ease;
+}
+
+.imagenes-button:hover{
+    background-color: #6889D2;
+    color: white;
+    transform: scale(1.03);
+}   
+
+.diagnosis-div{
+    background-color: rgba(99, 172, 61, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.report-button{
+    width: 200px !important; 
+    background-color: #0796D8;
+    font-family: 'League Spartan', sans-serif;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    height: 40px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    transition: all .5s ease;
+    float: right; 
+    margin-bottom: 20px
+}
+
+.report-button:hover{
+    background-color: #26283E;
+    color: white;
+    /* transform: scale(1.1); */
+}
+
+.report-button:disabled{
+    background: #d9d9d9;
+}
+
+.download-button{
+    width: 200px !important; background-color: #63AC3D;
+    font-family: 'League Spartan', sans-serif;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    height: 40px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    transition: all .5s ease;
+}
+
+.download-button:hover{
+    background-color: #488B25;
+    color: white;
+    transform: scale(1.03);
+}
+
+.download-button:disabled{
+    background-color: #d9d9d9;
+
+}
+
+.round-button{
+    width: 40px !important; 
+    float: right; 
+    margin-bottom: 20px; 
+    margin-left: 20px;
+    font-family: 'League Spartan', sans-serif;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 40px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    background: #E26969;
+    transition: all .5s ease;
+}
+
+.round-button:hover{
+    background-color: #ae3131;
+    color: white;
+    /* transform: scale(1.1); */
+}
+
+.hiding {
+    pointer-events: none;
+    background-color: #d9d9d9;
+    color: black;
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+.toggleReport{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.currentIndex{
+    margin: 0px 10px 0px 10px;
+}
+
+.toggle-link{
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #0279AF;
+    font-family: 'League Spartan', sans-serif;
+    font-size: large;
+    transition: all 0.3s ease;
+}
+
+.toggle-link:hover{
+    color: #26283E;
+}
+
+.transition-effect-out {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+  }
+  
+  .transition-effect-in {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+  }
+
+.toggle-container {
+    background: #d9d9d9;
+    width: 30%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+  }
+  
+  #loading-icon {
+    display: none; /* Hide the icon by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 9999; /* Ensure it appears above other content */
+  }
+  
+  #loading-icon i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: #ffffff;
+  }

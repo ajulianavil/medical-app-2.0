@@ -1,0 +1,127 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load my_filters %}
+{% load custom_tags %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_fonts.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/paciente_existe.css' %}"/>
+
+    <script src="https://kit.fontawesome.com/5bdb3c603b.js" crossorigin="anonymous"></script>
+    {% comment %} <script src="{% static 'js/upload_file.js' %}"></script> {% endcomment %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div> 
+    {% endfor %}
+{% endif %}
+<div style="text-align: center; padding: 50px;">
+    </br>
+    <h1 style="font-weight: bold; color: #0796D8">Historial de paciente</h1>
+    <p style="color: #26283E;"> Aquí podrá observar el historial de esta paciente. </p>
+
+    </br>
+    <div class="mid-container">
+        <div class="left-div">
+            <p style="color: #26283E;">Paciente {{paciente.nombreuno}} {{paciente.apellido_paterno}}</p> 
+            <p style="color: #26283E;"> Cédula {{paciente.cedulapac}}</p>
+        </div>
+        {% comment %} <form method="POST", enctype="multipart/form-data">
+        {% csrf_token %} {% endcomment %}
+        <div class="right-div">
+            <div class="tooltip-container">
+                <input type="radio" name="option" id="option_new" class="radio-input" value="0">
+                <label for="option_new" class="radio-label">
+                    <i class="fa-solid fa-circle-plus" onclick="window.location.href='{% url 'consultas/nueva'%}'"></i> 
+                </label>
+              <span class="tooltip">Realizar una nueva consulta.</span>
+            </div>
+        </div>
+    </div>
+    </br>
+    <div class="col cont-leyend">
+        <div class="leyend" style="background-color: rgba(159, 160, 208, 0.3); margin-left: 5px; flex: 0 0 auto; "></div> <p style="margin-bottom: 0">Embarazo pasado</p>
+        <div class="leyend" style="background-color: white; margin-left: 5px; flex: 0 0 auto; "></div> <p style="margin-bottom: 0">Último embarazo registrado</p>
+    </div>  
+
+    <div class="text-center"style="display: flex; justify-content: space-around; align-items: center;">
+        
+        <div class="reports-container">
+            {% for embarazo, consultas_reportes in embarazo_consultas_reportes.items %}
+                <div class="card {% if forloop.last  %} actual {%else%} finalizado {%endif%}" > 
+                    <table>
+                        <tr>
+                            {% get_embarazo embarazo.id_embarazo as type%} 
+                            <th colspan="3" style="text-align: left"><p style="color: #909090;">Embarazo {{ embarazo.numero_embarazo }}    |    {{type.1}} feto(s)</p></th>
+                            <th style="text-align: right">
+                                <div class="tooltip-left-container">
+                                    <i class="fa-solid fa-eye tab-icon" data-tooltip="Ver resumen de embarazo." onclick="openPopup({{embarazo.id_embarazo}})"></i>
+                                    <span class="tooltip-left">Ver resumen de embarazo.</span>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td> Ver </td>
+                            <td> Fecha consulta</td>
+                            <td>Edad gestacional</td>
+                            <td>Médico encargado </td>
+                            {% comment %} <td><p style="color: #909090;">{{consultas_embarazo}}</td> {% endcomment %}
+                        </tr>
+                        {% for consulta, reportes in consultas_reportes.items %}
+                            {% for reporte in reportes %}
+                                <tr >
+                                    <td><i class="fa-solid fa-eye goto" onclick="goToReportPopup({{consulta.consultaid}})"></i></td>
+                                    <td><p style="color: #909090;">{{consulta.fecha_consulta}}</p></td>
+                                    <td><p style="color: #909090;">{{consulta.consultaid|get_ga}} semanas</p></td>
+                                    {% get_medico_name consulta.medConsulta_id as medico_name %}
+                                    <td><p style="color: #909090;">{{medico_name}}</p></td>
+                                </tr>
+                            {%endfor%}
+                            <tr>
+                                <td colspan="4"><hr style="border-top: 1px solid #000;"></td>
+                            </tr>
+                        {%endfor%}
+                    </table>
+                </div>
+            {%endfor%}
+            </div>
+    </div>
+        <div style="display:flex; justify-content: flex-end">
+            <button id="submitBtn" class="btn-reg submit-button" onclick="goBack()">Volver a 'Registros'</button>
+        </div>
+            {% comment %} </form> {% endcomment %}
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+      }
+    const radioButtons = document.querySelectorAll('.radio-input');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // Add event listener to radio buttons
+    radioButtons.forEach((radioButton) => {
+      radioButton.addEventListener('change', () => {
+        submitBtn.disabled = false; // Enable the button when a radio button is selected
+      });
+    });
+
+    function openPopup(id_embarazo) {
+        //window.open("{% url 'resumen_embarazo' paciente.idpac %}", "Popup Window", "width=500,height=600");
+        var url = "{% url 'resumen_embarazo' 0 %}".replace('0', id_embarazo);
+        window.open(url, "Popup Window", "width=500,height=600");
+      }
+
+    function goToReportPopup(conid){
+        var url = "{% url 'registroinfo' 0 %}".replace('0', conid);
+        window.open(url, "Popup Window", "width=500,height=600");
+    }
+</script>
+{% endblock %}

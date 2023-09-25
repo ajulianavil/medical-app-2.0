@@ -1,0 +1,66 @@
+{% load static %}
+{% load my_filters %}
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan&family=Montserrat:wght@700&display=swap" rel="stylesheet"> 
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_fonts.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/resumen_embarazo.css' %}"/>
+
+    <script src="https://kit.fontawesome.com/5bdb3c603b.js" crossorigin="anonymous"></script>
+    {% comment %} <script src="{% static 'js/upload_file.js' %}"></script> {% endcomment %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div> 
+    {% endfor %}
+{% endif %}
+
+<div style="text-align: center; padding: 20px;">
+    <div class="mid-container">
+        <p style="font-weight: bold;"> EMBARAZO {{embarazo.numero_embarazo}} </p> 
+        <p style="color: #26283E;">Paciente C.C {{embarazo.idpac_id|get_pacient_id}}</p>
+    </div>
+    </br>
+        <div class="reports-container">
+                {% for consulta, reportes_embarazo in embarazo_consultas %}
+                    <div style="display: block; align-items: left;">  
+                        <p style="font-weight: bold;"> Consulta N° {{ consulta.consultaid }} <i class="fa-solid fa-eye all-eye" style="color: #0279AF;" onclick="window.location.href='{% url 'registroinfo' consulta.consultaid %}'"></i></p> <br>  
+                        <p class="init-text"> Motivo de consulta: </p> <br> <p class="desc-text"> {{ consulta.motivo_consulta }}</p> <br> <br>
+                        <p class="init-text"> Fecha de consulta: </p> <br> <p class="desc-text"> {{ consulta.fecha_consulta }}</p> <br> <br>
+                        {% for reporte in reportes_embarazo %}
+                            <p class="init-text"> Observaciones del médico: </p> <br> <p class="desc-text"> {{ reporte.txtresults }}</p>
+                            <br>
+                        {% endfor %}
+                        <br><br> <br>
+                    </div>
+                {% endfor %}
+
+            </div>
+    
+        {% comment %} <div style="display:flex; justify-content: flex-end">
+            <button id="submitBtn" class="btn submit-button" style="background: #63AC3D; width: 200px;" onclick="window.location.href='{%url 'registros'%}'">Volver a registros</button>
+        </div> {% endcomment %}
+            {% comment %} </form> {% endcomment %}
+</div>
+
+<script>
+    const radioButtons = document.querySelectorAll('.radio-input');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // Add event listener to radio buttons
+    radioButtons.forEach((radioButton) => {
+      radioButton.addEventListener('change', () => {
+        submitBtn.disabled = false; // Enable the button when a radio button is selected
+      });
+    });
+
+
+</script>
+{% endblock %}

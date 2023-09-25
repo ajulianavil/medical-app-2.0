@@ -1,0 +1,55 @@
+{% extends "users/home.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block body %}
+<head> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan&family=Montserrat:wght@700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'main/login.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/registro2.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <title>{% block title %} NeuroQuick | Login {% endblock %}</title>
+
+
+</head>
+<div>
+
+    <div class="cont">
+
+        <div class="login-card">
+            <div class="row">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger">
+                            {{ message }}
+                        </div> 
+                    {% endfor %}
+                {% endif %}
+                <div class="col login-options">
+                    
+                    <form class="login-form" method="POST" novalidate>
+                        <h2> Iniciar sesión </h2>
+                        {% csrf_token %}
+                        <label for="exampleInputEmail1">Correo electrónico</label>
+                        <input type="email" class="form-control" name="username" aria-describedby="emailHelp"
+                            placeholder="Email" required>
+                        <label for="exampleInputPassword1">Contraseña</label>
+                        <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
+                        <br />
+                        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                        <br />
+                        <h6 class="toregister"> ¿Aún no tienes una cuenta? </h6> <a href="/howToRegister"> Solicita una </a> </br>
+                        <a href="/reset_password/"> ¿Olvidaste tu contraseña? </a>
+                    </form>
+                </div>
+                <div class="col-6 image-login">
+                    <img src="{% static 'images/logo-medical.png' %}"
+                        class="img-fluid" alt="Phone image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,82 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_fonts.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/upload_file.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/loading.css' %}"/>
+
+    <script src="https://kit.fontawesome.com/5bdb3c603b.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/upload_file.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div> 
+    {% endfor %}
+{% endif %}
+<div style="    text-align: center;
+padding: 50px;">
+</br>
+    <h1 style="font-weight: bold; color: #0796D8">Nueva consulta</h1>
+    <h5 style="font-weight: bold; color: #26283E"> Subir imagenes </h5>
+    </br>
+    <div style="display: flex; justify-content: space-around;
+    align-items: center;">
+    <div class="bg-light p-5 text-center" style="border-radius: 15px; width: 60%">
+        <div id="loading-icon">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>   
+    </p>
+
+    <form method="POST", enctype="multipart/form-data">
+        {% csrf_token %}
+        {% comment %} <input type="file" name="file" id="file" /> {% endcomment %}
+        <div class="drop_box">
+            <header>
+            <h4>Cargue las imágenes</h4>
+
+            <p style="font-weight: lighter; color: #909090; margin-top:10px; font-size: small;">Asegúrese de que la edad gestacional del feto se encuentre entre las 15 y 39 semanas.</p>
+            </header>
+            <p>Archivos soportados: IMG</p>
+            <div class="inputContainer" id="inputContainer">
+                <input type="text" name="reporte" placeholder="Reporte" required>
+                <input multiple type="file" accept="image/jpeg" name="image_data" id="file1">
+            </div>
+            <br/>
+          </div>
+        <br>
+        <br>
+        <button class="btn submit-button" type="submit" onclick="activateLoader()">Procesar</button>
+    </form>
+
+  </div>
+</div>
+</div>
+
+<script>
+    function addInput() {
+        var inputContainer = document.getElementById("left-div");
+        var inputCount = inputContainer.getElementsByTagName("input").length;
+        var newInput = document.createElement("input");
+        newInput.type = "file";
+        newInput.accept = "text/plain";
+        newInput.name = "file" + (inputCount + 1);
+        newInput.id = "file" + (inputCount + 1);
+        if (inputCount < 5) {
+            inputContainer.appendChild(newInput);
+        }
+    }
+
+    var loadingIcon = document.getElementById("loading-icon");
+
+    function activateLoader(){
+        loadingIcon.style.display = "block";
+    }
+</script>
+{% endblock %}

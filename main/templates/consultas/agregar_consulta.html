@@ -1,0 +1,187 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_fonts.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/upload_file.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/loading.css' %}"/>
+
+    <script src="https://kit.fontawesome.com/5bdb3c603b.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/upload_file.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div> 
+    {% endfor %}
+{% endif %}
+<div style="    text-align: center;
+padding: 50px;">
+</br>
+    <h1 style="font-weight: bold; color: #0796D8">Nueva consulta</h1>
+    <h5 style="font-weight: bold; color: #26283E"> {% if multiple %} Embarazo múltiple {%else%} Embarazo de feto único {%endif%}</h5>
+    </br>
+    <div style="display: flex; justify-content: space-around;
+    align-items: center;">
+    <div class="bg-light p-5 text-center" style="border-radius: 15px; width: 60%">
+        <div id="loading-icon">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+    {% comment %} <p style="font-weight: lighter; color: #909090; margin-bottom: 0px">{% if multiple %} Sus archivos se procesarán para generar los reporte de diagnóstico de cada feto. {%else%}Su archivo se procesará para generar el reporte de diagnóstico. {%endif%}</p> {% endcomment %}
+    
+    </p>
+
+    <form method="POST", enctype="multipart/form-data">
+        {% csrf_token %}
+        {% comment %} <input type="file" name="file" id="file" /> {% endcomment %}
+        <div class="drop_box">
+            <header>
+            <h4>{% if multiple %} Por favor, cargue un archivo por cada feto. {%else%}Por favor, cargue el archivo extraído del ultrasonido.</h4> {%endif%} 
+
+            <p style="font-weight: lighter; color: #909090; margin-top:10px; font-size: small;">Asegúrese de que la edad gestacional del feto se encuentre entre las 15 y 39 semanas.</p>
+            </header>
+            {% if not multiple %} <p>Archivos soportados: TEXT</p> {%else%} <p style="color: red;">* Documentos obligatorios</p> {%endif%}
+            <div class="inputContainer" id="inputContainer">
+                {% if multiple %}
+                <div class="mid-container-title">
+                    <div class="left-div" style="padding:0px">
+                <p style="margin:0px;"> * TXT con la información del feto </p>
+                    </div>
+                    <div class="right-div">
+                <p  style="margin:0px;"> Imágenes de ultrasonido </p>
+                    </div>
+                </div>
+                <div class="mid-container" id="mid-container">
+                    <div class="two-divs">
+                        
+                        <div class="left-div" id="left-div">
+                            
+                            <input type="file" accept="text/plain" name="file1" id="file1">
+                        </div>
+                        
+                        <div class="right-multiple-div">
+                            
+                            <i class="fa-regular fa-image"></i>
+                            <input multiple type="file" accept="image/jpeg" name="image1" id="image1" title="Seleccionar imagen" aria-label="Seleccionar imagen">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn" type="button" onclick="addInput()"><i class="fa-solid fa-plus" style="margin-right: 5px"></i></button>
+                {%else%}
+                    <input type="file" accept="text/plain" name="file1" id="file1"> </br>
+                {% endif %}
+            </div>
+          </div>
+          {%if not multiple%}
+            <hr>
+                <div class="image-content">
+                    <h4 style="margin: 0px;">¿Desea adjuntar las imágenes de ultrasonido?
+                        <button type="button" class="collapsible">
+                            <i class="fa-solid fa-angle-down fa-bounce"></i>
+                        </button>
+                    </h4>
+                </div>
+                <div class="collapsible-content">
+                    <div class="inputContainer" id="inputContainer">
+                        <input multiple type="file" accept="image/jpeg" name="image_data" id="file1">
+                    </div>
+                </div>
+            {%endif%}
+        <br>
+        <br>
+        <input type="hidden" name="total_two_divs" id="total_two_divs_input" value="0">
+        <button class="btn submit-button" type="submit" onclick="activateLoader()">Procesar</button>
+    </form>
+
+  </div>
+</div>
+</div>
+
+<script>
+
+    var collapsibles = document.getElementsByClassName("collapsible");
+
+    for (var i = 0; i < collapsibles.length; i++) {
+      collapsibles[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.closest(".image-content").nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+    
+
+    var two_divs_count = 1;
+    function addInput() {
+        var inputContainer = document.getElementById("mid-container");
+        var inputCount = inputContainer.getElementsByClassName("two-divs").length;
+
+        if (inputCount < 5) {
+          // Create new file input
+          var newFileInput = document.createElement("input");
+          newFileInput.type = "file";
+          newFileInput.accept = "text/plain";
+          newFileInput.name = "file" + (inputCount + 1);
+          newFileInput.id = "file" + (inputCount + 1);
+          
+          // Create new image input
+          var newImageInput = document.createElement("input");
+          newImageInput.type = "file";
+          newImageInput.accept = "image/jpeg";
+          newImageInput.name = "image" + (inputCount + 1);
+          newImageInput.id = "image" + (inputCount + 1);
+          newImageInput.multiple = true;
+          
+          // Create a div for the new inputs
+          var twoDivs = document.createElement("div");
+          twoDivs.className = "two-divs";
+          
+          // Create the left div
+          var leftDiv = document.createElement("div");
+          leftDiv.className = "left-div";
+          leftDiv.appendChild(newFileInput);
+          
+          // Create the right div
+          var rightDiv = document.createElement("div");
+          rightDiv.className = "right-multiple-div";
+          
+          // Create the icon element
+          var icon = document.createElement("i");
+          icon.className = "fa-regular fa-image";
+          
+          // Append the icon and image input to the right div
+          rightDiv.appendChild(icon);
+          rightDiv.appendChild(newImageInput);
+          
+          // Append the left and right divs to the two divs
+          twoDivs.appendChild(leftDiv);
+          twoDivs.appendChild(rightDiv);
+          
+          // Append the two divs to the container
+          inputContainer.appendChild(twoDivs);
+        }
+
+        two_divs_count = two_divs_count + 1;
+        document.getElementById('total_two_divs_input').value = two_divs_count;
+        console.log(two_divs_count)
+      }
+      
+      
+      
+      
+
+    var loadingIcon = document.getElementById("loading-icon");
+
+    function activateLoader(){
+        loadingIcon.style.display = "block";
+    }
+</script>
+{% endblock %}

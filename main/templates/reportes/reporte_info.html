@@ -1,0 +1,320 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load my_filters %}
+{% load custom_tags %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/registrar_consulta.css' %}" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/reporte_script.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<br />
+<br />
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% if reporte|length > 1%}
+  <div class="toggleReport toggle-container">
+    <a href="#" onclick="toggleAnterior()" class="toggle-link"><i class="fa-solid fa-arrow-left"></i> Anterior</a>
+    <p id="currentIndex" class="currentIndex"> 1 de {{reporte|length}}</p>
+    <a href="#" onclick="toggleSiguiente()" class="toggle-link">Siguiente <i class="fa-solid fa-arrow-right" ></i></a>
+  </div>
+{%endif%}
+
+<div class="box container " style="height: 100%; margin-bottom:20px">
+  {% for r in reporte %}
+    <div class="object" style="display: none;">
+      <div>
+        <div class="row ">
+          <div class="col-md-auto ">
+            <strong class="col-md-auto label">
+              Fecha exámen
+            </strong>
+            <input id="med" type="text" name="date" value="{{consulta.formatted_fecha_consulta}}" disabled="false">
+          </div>
+          <div class="col-md-auto ">
+            <strong class="label">
+              Hora exámen
+            </strong>
+            <input id="med" type="text" name="date" value="{{consulta.formatted_hora_consulta}}" disabled="false">
+          </div>
+          <div class="col-md-auto ">
+            <strong class="col-md-auto label">
+              Médico 
+            </strong>
+            {% get_medico_name consulta.medConsulta_id as medico_name %}
+            {% get_medico_id consulta.medConsulta_id as medico_id %}
+            <input id="med" type="text" name="date" value="{{medico_name}}" disabled="false">
+          </div>
+          <div class="col-md-auto ">
+            <strong class="col-md-auto label">
+              Ultrasonido hecho por
+            </strong>
+            <input id="med" type="text" name="date" value="{{consulta.medUltrasonido}}" disabled="false">
+          </div>
+        </div>
+      </div>
+      <br />   <br />
+      <h4 style="font-weight: bold;"> Datos paciente </h4>
+      <hr>
+      <form class="report-form" id="report-form" method="POST" action="{% url 'editPacientData' consulta.consultaid %}">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-auto">
+            <strong class="col-md-auto label"> Primer nombre </strong>
+            <input id="name-uno" type="text" name="name-uno"
+              value="{%if paciente.nombreuno == None%}-{%else%}{{paciente.nombreuno}}{%endif%}" disabled>
+          </div>
+          <div class="col-md-auto">
+            <strong class="col-md-auto label"> Segundo nombre </strong>
+            <input id="name-dos" type="text" name="name-dos"
+              value="{%if paciente.nombredos == None%}-{%else%}{{paciente.nombredos}}{%endif%}" disabled>
+          </div>
+          <div class="col-md-auto">
+            <strong class="col-md-auto label"> Primer apellido </strong>
+            <input id="last-uno" type="text" name="last-uno"
+              value="{%if paciente.apellido_paterno == None%}-{%else%}{{paciente.apellido_paterno}}{%endif%}"
+              disabled>
+          </div>
+          <div class="col-md-auto">
+            <strong class="col-md-auto label"> Segundo apellido </strong>
+            <input id="last-dos" type="text" name="last-dos"
+              value="{%if paciente.apellido_materno == None%}-{%else%}{{paciente.apellido_materno}}{%endif%}"
+              disabled>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-auto">
+            <strong class="col-md-auto label"> Último periodo menstrual (LMP) </strong>
+            <input id="lmp" type="text" name="lmp" value="{{paciente.lmp}}" disabled>
+          </div>
+          <div class="col-md-auto">
+            <strong class="col-md-auto label"> Cédula </strong>
+            <input id="cedula" type="text" name="cedula" value="{{paciente.cedulapac}}" disabled>
+          </div>
+          <div class="col-md-auto">
+            <strong class="col-md-auto label"> Embarazo </strong>
+            <input id="gest" type="text" name="gest" value="{{paciente.numgestacion}}" style="width: 100px;"
+              disabled>
+          </div>
+          {% comment %} <div class="col-md-auto">
+            <strong class="col-md-auto label"> Embarazo # </strong>
+            <input id="emb" type="text" name="emb" value="{%if consulta.idembarazo_id > 0 %} {{consulta.idembarazo_id|get_numero_embarazo}} {%else%} 1 {%endif%}" style="width: 100px;"
+              disabled>
+          </div> {% endcomment %}
+        </div>
+    
+        <br />
+          <div style=" width: fit-content; display: flex; flex-direction: row;">
+            <div class="col-md-auto">
+              <strong class="col-md-auto label"> Motivo consulta </strong>
+              <input id="motivo" type="text" name="motivo" style="width: 500px"
+                value="{%if consulta.motivo_consulta == None%}No registra{%else%}{{consulta.motivo_consulta}}{%endif%}" disabled>
+            </div>
+          </div>
+    
+          <div>
+            {% comment %} <input type="hidden" name="id_consulta" value="{{ consulta.consultaid }}"> {% endcomment %}
+            <button class="btn round-button" type="button" id="cancelInfo" style="display: None;" onclick="onCancelInfo()"> <i class="fa-solid fa-xmark"></i></button>
+            {% if medico_id == current_user.userid %} <button class="btn report-button" id="editButton" type="button" style="width: 200px !important" onclick="enableFields()"> <i class="fa-solid fa-pen"></i> Editar información</button> {%endif%}
+            <button class="btn report-button" id="sendButton" type="submit" style="width: 200px !important; display: none;" onclick="saveFields()">Guardar información</button>
+          </div>
+          
+    
+      </form>
+      <br />
+      <br />
+      <br />
+      <div class="row">
+        <div class="col">
+          <h4 style="font-weight: bold;"> Datos feto </h4>
+          <hr>
+        </div>
+      </div>
+      <form class="report-form" id="full-report-form" method="POST" action="{% url 'editReportData' r.idreporte %}">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col">
+            <strong class="col-md-auto label"> Fecha estimada de parto (EDB) </strong>
+          </div>
+          <div class="col">
+            <input id="med" type="text" name="edb" value="{{r.edb}}" disabled>
+          </div>
+          <div class="col">
+            <strong class="col-md-auto label"> Peso fetal estimado (EFW) </strong>
+          </div>
+          <div class="col">
+            <input id="med" type="text" name="efw" value="{{r.efw}} gr" disabled>
+          </div>
+          <div class="col">
+            <strong class="col-md-auto label"> Edad gestacional (GA) </strong>
+          </div>
+          <div class="col">
+            <input id="med" type="text" name="ga" value="{{r.ga}} semanas" disabled>
+          </div>
+        </div>
+        <br />
+        {% with current_index=forloop.counter0 %}
+        {% with diagnostico=diagnosticos|get_array_object:current_index %}
+          <div>
+            <div class="col" id="description" name="description">
+              {% comment %} <textarea id="description" name="description" rows="8" cols="30" style="width: 100%"> {% endcomment %}
+              <p class="title"> Valores normales </p>
+              <span style="display: inline-block; font-size: 16px;"> El feto presenta valores normales en </span>
+
+              <h5 class="diagnosis">{{diagnostico.count}} de {{diagnostico.num_fields}} </h5> 
+
+              <span style="display: inline-block; font-size: 16px;"> valores medidos. </span>
+            
+              </br></br>
+              {% if diagnostico.normales|length == 0 %}
+                <span style="display: inline-block; font-size: 16px;">El feto no presenta valores normales para su edad gestacional.
+                </span> </br>
+              {% else %}
+                {% for item in diagnostico.normales %}
+                  <p class="diagnosis"> {{ item|get_med_name }} </p> 
+                  <span style="display: inline-block; font-size: 16px;">:  {{r|get_field_value:item }}, 
+                    se encuentra {{r|get_ref_values:item}} </span> </br>
+                {%endfor%}
+              {%endif%}
+
+              </br>
+
+              <p class="title"> Valores anormales </p>
+              {% if diagnostico.anormales|length == 0 %}
+                <span style="display: inline-block; font-size: 16px;">El feto no presenta anormalidades.
+                </span> </br>
+              {% else %}
+                {% for item in diagnostico.anormales %}
+                {% comment %} {% if r|get_field_value:item != '0'%} {% endcomment %}
+                  <p class="diagnosis"> {{ item|get_med_name }} </p> 
+                  <span style="display: inline-block; font-size: 16px;">: {{r|get_field_value:item }}, 
+                    se encuentra {{r|get_ref_values:item}} indicando {{r|get_diagnosis:item }}
+                  </span> </br>
+                {% comment %} {%endif%} {% endcomment %}
+                {%endfor%} 
+              {%endif%}
+              
+              </br>
+
+              <div class="diagnosis-div">
+                <p class="title"> Diagnóstico aproximado </p>
+                {% if diagnostico.anormales|length == 0 %}
+                  <span style="display: inline-block; font-size: 16px;">El feto está dentro de los rangos normales para su edad gestacional.
+                  </span> </br>
+                {%endif%}
+                {% if diagnostico.anormales %}
+                  {% for item in diagnostico.anormales %}
+                    {% if forloop.first %}
+                      <span style="display: inline-block; font-size: 16px;">Posible {{ r|get_diagnosis_conclude:item }}</span>
+                    {% else %}
+                      <span>, {{ r|get_diagnosis_conclude:item }}</span>
+                    {% endif %}
+                  {%endfor%}
+                {%endif%}
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div id="observaciones">
+            <h4 style="font-weight: bold;"> Observaciones del médico </h4>
+            <textarea id="obs" name="obs" class="custom-area" rows="4" cols="40" disabled>{% if r.txtresults != None %} {{r.txtresults}} {%else%} {%endif%}</textarea>
+          </div>
+        {% endwith %}
+        {% endwith %}
+        <div class="grid">
+          <div class="col-12" style="margin-top: 10px; margin-bottom: 10px">
+            <button class="btn round-button" type="button" id="cancelReport" style="display: None;" onclick="onCancelReport()"> <i class="fa-solid fa-xmark"></i></button>
+            {% if medico_id == current_user.userid %}<button class="btn report-button" type="button" id="editReport" onclick="enableReportFields()"> <i class="fa-solid fa-pen"></i> Editar observaciones</button>{%endif%}
+            <button class="btn report-button" type="submit" id="saveReport" style="display: None" onclick="saveReport()">Guardar reporte</button>
+          </div>
+        </div>
+      </form>
+      <div class="col-12" style="display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      margin-top: 10px; margin-bottom: 10px">
+        <form id="descargarPDF" method="GET" action="{% url 'reporte_pdf' consulta.consultaid r.idreporte %}">
+          {% csrf_token %}
+          <button class="btn download-button" type="submit" id="download_button"
+          style="width: 200px !important; float: left; margin-bottom: 20px"><i class="fa-solid fa-arrow-down" style="margin-right: 10px;"></i>Descargar reporte</button>
+          <a class="btn imagenes-button" href="/consultas/display_image/{{ r.idreporte }}" type="submit" id="full_analysis"
+          role="button"> <i class="fa-regular fa-image"></i> Ver imágenes</a>
+          <a class="btn analisis-button" href="/reporte/graficos/{{ consulta.consultaid }}/{{ r.idreporte }}" type="submit" id="full_analysis"
+          role="button">Ver análisis gráfico</a>
+        </form>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  var objects = document.getElementsByClassName("object");
+  var currentIndex = 0;
+  objects[currentIndex].style.display = "block";
+
+  function toggleAnterior() {
+    if (currentIndex > 0) {
+      const previousIndex = currentIndex;
+      currentIndex = (currentIndex - 1) % objects.length;
+  
+      objects[previousIndex].classList.add("transition-effect-out");
+      setTimeout(() => {
+        objects[previousIndex].style.display = "none";
+  
+        objects[currentIndex].style.display = "block";
+  
+        objects[currentIndex].classList.add("transition-effect-in");
+  
+        setTimeout(() => {
+          objects[currentIndex].classList.remove("transition-effect-in");
+          objects[previousIndex].classList.remove("transition-effect-out");
+        }, 300);
+      }, 300);
+  
+      document.getElementById("currentIndex").textContent = (currentIndex + 1) + "/" + "{{reporte|length}}";
+    }
+  }
+  function toggleSiguiente() {
+    if (currentIndex < parseInt("{{reporte|length}}")) {
+      const previousIndex = currentIndex;
+      currentIndex = (currentIndex + 1) % objects.length;
+  
+      // Add the transition-out effect
+      objects[previousIndex].classList.add("transition-effect-out");
+      setTimeout(() => {
+        // Hide the previous object after the transition effect is complete
+        objects[previousIndex].style.display = "none";
+  
+        // Show the new object
+        objects[currentIndex].style.display = "block";
+  
+        // Add the transition-in effect
+        objects[currentIndex].classList.add("transition-effect-in");
+  
+        // After a small delay, remove the transition classes
+        setTimeout(() => {
+          objects[currentIndex].classList.remove("transition-effect-in");
+          objects[previousIndex].classList.remove("transition-effect-out");
+        }, 300); // 300ms should match the transition duration (0.3s)
+      }, 300); // 300ms should match the transition duration (0.3s)
+  
+      document.getElementById("currentIndex").textContent = (currentIndex + 1) + "/" + "{{reporte|length}}";
+    }
+  }
+
+
+  
+</script>
+
+{% endblock %}

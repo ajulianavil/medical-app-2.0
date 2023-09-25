@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>NeuroQuick</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan&family=Montserrat:wght@700&display=swap" rel="stylesheet"> 
+</head>
+
+<body>
+    <nav class="navbar navbar-light  container">
+        <!-- <a class="navbar-brand" href="#">Brand</a> -->
+        {% comment %} <img class="logo" src="{% static 'images/medicApp.png' %}" alt="medicAppLogo" /> {% endcomment %}
+
+        <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link menuItem" href="/aboutUs">Sobre nosotros</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link menuItem" href="/howToRegister">Registro</a>
+        </li>
+        <li class="nav-item">
+        </li>
+    </ul>
+    {% comment %} <a class="btn btn-primary" href="login">Iniciar sesión</a> {% endcomment %}
+    <a href="login" class="loginLink"> Iniciar sesión </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        </div>
+    </nav>
+    {% comment %} <section> {% endcomment %}
+    
+    <main>
+        <div class="all-contant">
+             <div class="content-body">
+               {% comment %}     <h1>Welcome to My Website</h1>{% endcomment %}
+            </div> 
+            <img class="welcome" src="{% static 'images/medicApp_full.png' %}" alt="medicAppLogo" />
+            
+        </div>
+        <div style="    display: flex;
+        justify-content: space-around;
+        align-items: center; padding-top: 20px">
+    {% comment %} </br><span style="color: #909090; font-size: 15px; font-weight: bold; margin-top: 100px">Sistema de diagnóstico inmediato para anomalías del sistema nervioso central fetal</span> {% endcomment %}
+            <button type="submit" class="btn btn-primary" style="font-size: 20px;" onclick="redirectToPage()">Iniciar sesión</button>
+        </div>
+        <br />
+        <br />
+
+    </main>
+    <br />
+    <br />
+
+        {% comment %} <div class='air air1'></div>
+        <div class='air air2'></div>
+        <div class='air air3'></div>
+        <div class='air air4'></div>
+      </section> {% endcomment %}
+    {% comment %} <footer class="footer-distributed">
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>Universidad Industrial de Santander</span> </br>
+                {% comment %} <span>Clínica Foscal Internacional</span> 
+
+            </p>
+
+            {% comment %} <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+
+            </div>
+
+        </div>
+
+    </footer> {% endcomment %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.tutorialzine.com/misc/enhance/v2.js" async=""></script>
+</body>
+</html>
+
+<script>
+    function redirectToPage() {
+        window.location.href = "/login";
+    }
+</script>

@@ -1,0 +1,102 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load my_filters %}
+{% load custom_tags %}
+
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_fonts.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/multiple_registrado.css' %}"/>
+
+    <script src="https://kit.fontawesome.com/5bdb3c603b.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/multiple_registrado.js' %}"></script>
+    {% comment %} <script src="{% static 'js/upload_file.js' %}"></script> {% endcomment %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div> 
+    {% endfor %}
+{% endif %}
+<div style="text-align: center; padding: 50px;">
+    </br>
+    <h1 style="font-weight: bold; color: #0796D8">Asociar fetos</h1>
+    </br>
+
+    <div class="mid-container">
+        <div class="left-div">
+            {% comment %} <p style="color: #26283E;">Para mantener el historial, define si esta consulta hace parte de un embarazo en curso ya registrado, o si es la primera consulta de un nuevo embarazo, márcalo como tal.</p> {% endcomment %}
+            <p style="color: #26283E;"> Hemos encontrado consultas pasadas para este embarazo múliple.</p>
+            <p style="color: #26283E; font-weight: bold;">En la primera consulta, se identificó cada feto por su posición de la siguiente manera:.</p> </br>
+        </div>
+    </div>
+
+    <div id="loading-icon">
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+
+    <form method="POST", enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="text-center"style="display: flex; justify-content: space-around; align-items: center;">
+            <div class="reports-container">
+                {% comment %} {% for emb in embarazos%} {% endcomment %}
+                {% for feto in fetos %}
+                    <div style="display: flex; flex-direction: column;">
+                        <div><h4 style="font-weight: bold; color: #0796D8"> Feto {{forloop.counter }}</h4></div>
+                        <div class="card" > 
+                            <p> {{feto.posicion_feto}} </p>
+                        </div>
+                    </div> 
+                {%endfor%}
+            </div>
+        </div>
+
+        </br>
+        <p style="color: #26283E; font-weight: bold;"> A continuación verá los datos de su nueva consulta, por favor verifique las posiciones de cada feto y asocielos según corresponda.</p>
+        </br>
+
+        <div class="text-center"style="display: flex; justify-content: space-around; align-items: center;">
+            <div class="reports-container-two">
+                {% for reporte in reportes %}
+                        <div style="display: flex; flex-direction: column;">
+                            <div class="card-two" > 
+                                <div class="mid-container">
+                                    <div class="left-div">
+                                        <p> {{reporte.txtresults}} </p>
+                                    </div>
+                                    <div class="right-div">
+                                        {% for feto in fetos %}
+                                            <div class="feto-item">
+                                                <p class="radio-label">Feto {{forloop.counter }}</p> <input class="radio-input" type="radio" id="radio_{{ forloop.parentloop.counter }}_{{ forloop.counter }}" name="{{ forloop.parentloop.counter }}" value="{{ feto.idfeto }}" onclick="handleRadioButton(this)">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                {%endfor%}
+            </div>
+        </div>
+        <input type="hidden" name="consulta" value="{{ consulta }}">
+        <input type="hidden" name="fetos" value="{{ fetos }}">
+        <button id="submitBtn" class="btn submit-button" style="background: #63AC3D; width: 200px; "type="submit"  onclick="activateLoader()">Continuar</button>
+    </form>
+</div>
+
+<script>
+
+    var loadingIcon = document.getElementById("loading-icon");
+
+    function activateLoader(){
+        console.log("alo")
+        loadingIcon.style.display = "block";
+    }
+</script>
+
+{% endblock %}

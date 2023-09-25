@@ -1,0 +1,14 @@
+{% extends 'main/html.html' %}
+{% block body %}
+
+<body class="hold-transition sidebar-mini layout-fixed" id="body-pd">
+    {% include 'main/components/sidebar.html' %}
+    <div id="contenido">
+        {% block content %}
+        
+        {% endblock %}
+    </div>
+    {% block javascript %}
+    {% endblock %}
+</body>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/form_registro.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/main_fonts.css' %}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan&family=Montserrat:wght@700&display=swap"
+  rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div> 
+    {% endfor %}
+{% endif %}
+
+<div class="cont">
+    <div class="row">
+        <div class="col login-options">
+          {% comment %} Modal {% endcomment %}
+          <div class="modal fade custom-modal" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Permisos de administrador</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" >
+                        Los administradores tienen acceso a la creación, desactivación y activación de usuarios, incluídos otros administradores. 
+                        Los administradores deben ser profesionales de
+                        confianza. </br></br>Recuerde que para acceder a las funcionalidades de diagnóstico inmediato y el repositorio NO es
+                        necesario contar con dichos permisos. ¿Está seguro que desea crear un nuevo administrador? 
+                        <span id="modalUserId" style="display: None"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeDModal()" style="font-family: 'League Spartan', sans-serif;">No</button>
+                        <button type="button" class="btn yes-button" onclick="closeModal()">Sí, crear administrador </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <form class="registro-form" method="POST">
+            <h2> Crear nuevo usuario </h2>
+            <span style="font-size: 16px;"> Usted está a punto de crear un usuario de tipo </span>
+            <h5 style="font-size: 16px;
+            font-weight: bold;
+            margin: 0; color: #0796D8;">{{rol}}* </h5> 
+
+            <div >
+              {% csrf_token %}
+              {% comment %} {{ form.non_field_errors }}
+              {{ form.errors }}
+
+              {{ form.email.errors }} {% endcomment %}
+              <label for="{{ form.subject.id_for_label }}">{{ form.email.label }}</label>
+              {{ form.email }}
+              {{ form.password.errors }}
+              <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+              {{ form.password }}
+              {{ form.repassword.errors }}
+              <label for="{{ form.repassword.id_for_label }}">{{ form.repassword.label }}</label>
+              {{ form.repassword }}
+
+              {% if rol == 'médico' %}
+                <label for="{{ form.subject.id_for_label }}" onclick="showModal()">{{ form.is_superuser.label }}
+                {{ form.is_superuser }}
+                </label>
+              {% endif %}
+
+              <input type="hidden" name="roles" value="{{ rol }}">
+              <br />
+              <div style="display: flex;
+              align-items: center;
+              justify-content: center;">
+                <button type="submit" class="btn btn-primary" style="width: 60%;">Registrar usuario</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      <div class="col-6 image-login">
+        {% if rol == 'investigador'%} 
+        <img src="{% static 'images/new-external.png' %}" class="img-fl" alt="Nuevo investigador">
+        {% else %}
+        <img src="{% static 'images/new-medical.png' %}" class="img-fl" alt="Nuevo médico">
+        {%endif%}
+      </div>
+    </br> </br>
+    <div class="help-text">
+      {% if rol == 'investigador'%} 
+      <span class="help-text-span"> *Los usuarios tipo 'Investigador' sólo tendrán acceso a las herramientas de visualización y descarga de datos, excepto datos personales de los pacientes. </span>
+      {% else %}
+      <span class="help-text-span"> *Los usuarios tipo 'Médico' tienen acceso a las herramientas de diagnóstico inmediato, así como a la visualización y descarga de datos (incluídos datos de pacientes). </span>
+      {%endif%}
+    </div>
+
+    </div>
+</div>
+
+<script>
+
+function showModal() {
+  var checkbox = document.getElementById("id_is_superuser");
+  if (checkbox.checked){
+    $('#confirmationModal').modal('show');
+  }
+}
+
+function closeDModal(){
+    var checkbox = document.getElementById("id_is_superuser");
+    checkbox.checked = false;
+
+    var confirmationModal = document.querySelector('#confirmationModal');
+    $(confirmationModal).modal('hide');
+}
+
+function closeModal(){
+  var confirmationModal = document.querySelector('#confirmationModal');
+  $(confirmationModal).modal('hide');
+}
+
+</script>
+{% endblock %}

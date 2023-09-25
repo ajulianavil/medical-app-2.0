@@ -1,0 +1,15 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div> 
+{% endfor %}    
+{% endif %}
+  <div>
+    <p>error</p>
+  </div>
+{% endblock %}

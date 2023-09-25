@@ -1,0 +1,155 @@
+body{
+    background-color: white;
+}
+label {
+    font-size: 15px !important;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #26283E;
+}
+
+h2{
+    font-weight: bold;
+    color: #26283E;
+}
+
+form {
+    font-size: 16px;
+    font-family: 'League Spartan', sans-serif;
+}
+
+/* Style the submit button */
+button[type="submit"] {
+    background-color: #0796D8;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2), 0 6px 5px 0 rgba(0,0,0,0.19);
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button[type="submit"]:hover{
+    background-color: #0279AF;
+}
+
+.login-card{
+    width: 800px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 15px;
+}
+
+.cont{
+    /* height: 100vh; */
+    padding: 60px 30px 20px 30px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.help-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.help-text-span{
+    font-size: small; font-weight: bold; color: #848282; text-align: center;
+    width: 50%;
+
+}
+
+/* divs */
+.login-options{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    display: flex; justify-content: flex-end;
+}
+
+.image-login{
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: grid;
+}
+
+.registro-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.img-fl{
+    margin-left: 20px !important;
+    max-width: 60%;
+    height: auto;
+}
+
+.custom-modal{
+    width: 100%;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    z-index: 1050;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-backdrop {
+  background-color: transparent; /* Set the background color to transparent */
+}
+
+.modal-body{
+    font-family: 'League Spartan', sans-serif;
+}
+
+.modal-title{
+    font-weight: bold;
+}
+
+.close{
+  border: none;
+  border-radius: 5px;
+  background: #919191;
+  color: white;
+  transition: all 0.5s ease;
+}
+
+.close:hover{
+  border: none;
+  border-radius: 5px;
+  background: #585858;
+  color: white;
+}
+
+.yes-button{
+    font-family: 'League Spartan', sans-serif;
+    background-color: #0796D8;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius:5px;
+    cursor: pointer;
+    width: 220px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.yes-button:hover{
+    background-color: #0279AF;
+    color: #fff;
+}

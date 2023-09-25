@@ -1,0 +1,30 @@
+:root {
+  --first-color: #0796D8;
+}
+
+img {
+  border-radius: 50%;
+  background-color: #fff;
+  width: 50px;
+  height: 50px;
+}
+
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 20px 10px 10px;
+}
+
+.header_toggle {
+  color: var(--first-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .body {
+    padding-left: 200px;
+  }
+
+}

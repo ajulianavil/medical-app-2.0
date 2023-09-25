@@ -1,0 +1,301 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load my_filters %}
+{% load custom_tags %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/search_user.css' %}" />
+<script src="{% static 'js/validations.js' %}"></script>
+<script src="{% static 'js/window.js' %}"></script>
+
+{% endblock %}
+{% block content %}
+
+{% comment %} Modales {% endcomment %}
+  <div>
+    <div class="modal fade custom-modal" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Desactivar usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeDModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Este usuario perderá el acceso a la plataforma. </br> ¿Está seguro que desea desactivarlo?
+                    <span id="modalUserId" style="display: None"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeDModal()"  style="font-family: 'League Spartan', sans-serif;">No</button>
+                    <button type="button" class="btn yes-button" onclick="deactivateUser()">Sí, quiero desactivarlo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="modal fade custom-modal" id="confirmationReActiveModal" tabindex="-1" role="dialog" aria-labelledby="confirmationReActiveModalLabel" aria-hidden="true" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationReActiveModalLabel">Reactivar usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Este usuario podrá acceder nuevamente a la plataforma </br> ¿Está seguro que desea activarlo?
+                        <span id="modal2UserId" style="display: None"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()"  style="font-family: 'League Spartan', sans-serif;">No</button>
+                        <button type="button" class="btn yes-button" onclick="reactivateUser()">Sí, quiero activarlo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% comment %} Fin modales {% endcomment %}
+
+    <div class="container-fluid row" style="padding-top: 30px">
+      <h1 class="mb-4" style="font-weight: bold; color: #0796D8">Ver usuarios</h1>
+      <p style="font-weight: bold;">Aquí podrá acceder al listado de usuarios.</p> 
+
+    </div>
+    <div class="input-group input-group-sm" style="padding-top: 0; position: relative; padding-right:100px; padding-left:20px ">
+      <form class="search-formm" method="POST" id="search-form">
+        {% csrf_token %}
+        <div class="mid-container">
+          <div class="left-div">
+            <div class="row">
+              <div class="col" style="display: flex; align-items: center;">
+                <label style="padding-right: 10px">Email</label> 
+                <input type="text" class="form-control" placeholder="Filtrar por correo" id="email_input" name="email_input" />
+              </div>
+              <div class="col" style="display: flex; align-items: center;">
+                <label style="padding-right: 10px">Cédula</label> 
+                <input type="text" class="form-control" placeholder="Filtrar por cédula" id="cedula_input" name="cedula_input" oninput="validateNumberInput(this)" />
+              </div>
+              <button type="submit" class="round-button">
+                <i class="fas fa-search fa-lg"></i>
+              </button>
+            </div>
+          </div>
+          <div class="right-div">
+            <div class="tooltip-container">
+              <i class="fa-solid fa-eye all-eye" onclick="submitForm()"></i>  
+              <span class="tooltip">Ver todos los usuarios.</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <br>
+    {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-warning">
+              {{ message }}
+          </div> 
+      {% endfor %}
+    {% endif %}
+    <br>
+    <div class="container">
+
+    <table id="myTable">
+      <thead>
+        <tr>
+          <th style="text-align: center;">Correo electrónico</th>
+          <th style="text-align: center;">Rol</th>
+          <th style="text-align: center;">Cédula</th>
+          <th style="text-align: center;">Teléfono</th>
+          <th style="text-align: center;">Dirección</th>
+          <th style="text-align: center;">Institución</th>
+          <th style="text-align: center;">Fecha de última sesión</th>
+          <th style="text-align: center;">Estado</th>
+          <th style="text-align: center;">Cambiar estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% comment %} # href="/registros/consulta/{{ consulta }}" {% endcomment %}
+        {% for user in objects %}
+        <tr>
+          <td style="text-align: center;">{{ user.email }}</td>
+          {% comment %} <td style="text-align: center;">{{ user.userced }}</td> {% endcomment %}
+          <td style="text-align: center;">{% if user.roles == investigador %} Investigador {%else%} Médico {%endif%}</td>
+          {% get_info_user user.userid as user_info  %}
+          <td style="text-align: center;"> {{ user_info.0 }}</td>
+          <td style="text-align: center;"> {{ user_info.1 }}</td>
+          <td style="text-align: center;"> {{ user_info.2 }}</td>
+          <td style="text-align: center;"> {{ user_info.3 }}</td>
+          <td style="text-align: center;">{% if user.last_login == None %} - {%else%} {{ user.last_login }} {%endif%}</td>
+          <td style="text-align: center;">{% if user.is_active == True %} Activo {%else%} No activo {%endif%}</td>
+          <td style="text-align: center;">
+            {% if user.is_active == True %}
+            <a class="eye-search" href="#" data-toggle="modal" data-target="#confirmationModal" data-userid="{{ user.userid }}"> 
+              <i class="fa-solid fa-circle-xmark search"></i>
+            </a>
+            {% else %}
+            <a class="re-search" href="#" data-toggle="modal" data-target="#confirmationReActiveModal" data-userid="{{ user.userid }}"> 
+               <i class="fa-solid fa-clock-rotate-left search"></i>
+            </a>
+            {%endif%}
+          </td>
+        </tr>
+        {% empty %}
+        
+        <tr>
+          <td colspan="9" style="text-align: center;">No existen registros.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- Confirmation Modal -->
+
+  </div>
+  <div id="pagination"></div>
+  </div>
+<div style="height: 100px"></div>
+
+
+<script>
+
+  function submitForm() {
+    document.getElementById('search-form').submit();
+  }
+
+var table = document.getElementById("myTable");
+var tbody = table.getElementsByTagName("tbody")[0]; // Get the tbody element
+
+var rowsPerPage = 10; // Number of rows to display per page
+var currentPage = 1; // Current page number
+
+// Calculate the total number of pages
+var totalPages = Math.ceil(table.rows.length / rowsPerPage);
+
+// Function to display the rows for the current page
+function displayRows() {
+  var start = (currentPage - 1) * rowsPerPage;
+  var end = start + rowsPerPage;
+
+  // Hide all rows in the tbody
+  for (var i = 0; i < tbody.rows.length; i++) {
+    tbody.rows[i].style.display = "none";
+  }
+
+  // Show the rows for the current page
+  for (var j = start; j < end; j++) {
+    if (tbody.rows[j]) {
+      tbody.rows[j].style.display = "";
+    }
+  }
+}
+
+// Function to generate the pagination links
+function generatePaginationLinks() {
+  var pagination = document.getElementById("pagination");
+  pagination.innerHTML = "";
+
+  // Create previous page link
+  var prevLink = document.createElement("a");
+  prevLink.href = "#";
+  prevLink.textContent = "Anterior";
+  prevLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (currentPage > 1) {
+      currentPage--;
+      displayRows();
+    }
+  });
+  pagination.appendChild(prevLink);
+
+  // Create page number links
+  for (var page = 1; page <= totalPages; page++) {
+    var pageLink = document.createElement("a");
+    pageLink.href = "#";
+    pageLink.textContent = page;
+    pageLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      currentPage = parseInt(event.target.textContent);
+      displayRows();
+    });
+    pagination.appendChild(pageLink);
+  }
+
+  // Create next page link
+  var nextLink = document.createElement("a");
+  nextLink.href = "#";
+  nextLink.textContent = "Siguiente";
+  nextLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (currentPage < totalPages) {
+      currentPage++;
+      displayRows();
+    }
+  });
+  pagination.appendChild(nextLink);
+}
+
+// Display the initial rows and generate pagination links
+displayRows();
+generatePaginationLinks();
+
+document.addEventListener('DOMContentLoaded', function() {
+    var eyeSearchLinks = document.querySelectorAll('.eye-search');
+    var confirmationModal = document.querySelector('#confirmationModal');
+    var modalUserId = confirmationModal.querySelector('#modalUserId');
+
+    eyeSearchLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            var userId = link.dataset.userid; // Get the user ID from the data attribute
+            modalUserId.textContent = userId;
+            // Show the modal
+            $(confirmationModal).modal('show');
+        });
+    });
+});
+
+function closeDModal(){
+    var confirmationModal = document.querySelector('#confirmationModal');
+    $(confirmationModal).modal('hide');
+}
+
+function deactivateUser(){
+    var userId = modalUserId.textContent;
+    // Construct the URL with the additional parameter
+    var url = '/deactivateUser/' + encodeURIComponent(userId)
+    // Redirect to the desired Django view with the additional parameter
+    window.location.href = url;
+  }
+
+document.addEventListener('DOMContentLoaded', function() {
+var eyeSearchLinks = document.querySelectorAll('.re-search');
+var confirmationReActiveModal = document.querySelector('#confirmationReActiveModal');
+var modal2UserId = confirmationReActiveModal.querySelector('#modal2UserId');
+
+eyeSearchLinks.forEach(function(link) {
+    link.addEventListener('click', function(event) {
+        event.preventDefault();
+        var userId = link.dataset.userid; // Get the user ID from the data attribute
+        modal2UserId.textContent = userId;
+        // Show the modal
+        $(confirmationReActiveModal).modal('show');
+    });
+});
+});
+
+function closeModal(){
+    var confirmationReActiveModal = document.querySelector('#confirmationReActiveModal');
+    $(confirmationReActiveModal).modal('hide');
+}
+
+function reactivateUser(){
+    var userId = modal2UserId.textContent;
+    // Construct the URL with the additional parameter
+    var url = '/reactivateUser/' + encodeURIComponent(userId)
+    // Redirect to the desired Django view with the additional parameter
+    window.location.href = url;
+  }
+  </script>
+
+{% endblock %}

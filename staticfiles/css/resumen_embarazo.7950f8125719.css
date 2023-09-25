@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'League Spartan', sans-serif;
+}
+
+p{
+    font-weight: lighter; 
+    margin-bottom: 0px; 
+    font-size: medium;
+    margin: 0px 5px;
+}
+
+.init-text{
+    padding-left: 10px;
+    color: #909090;
+}
+
+.desc-text{
+    padding-left: 30px;
+    color: #909090;
+}
+
+.container {
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: #fcfcfc;
+}
+
+.fa-circle-plus{
+    font-size: xx-large;
+    color: #52CBF5;
+    transition: all 0.5s ease;
+}
+
+.fa-circle-plus:hover{
+    color: #0279AF;
+}
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.all-eye{
+  color: #0279AF;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.all-eye{
+  color: #26283E;
+  transform: scale(1.1);
+}
+  
+.tooltip {
+    font-family: 'League Spartan', sans-serif;
+    visibility: hidden;
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    min-width: 200px;
+    max-width: 400px;
+    background-color: #26283E;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: pre-wrap;
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.2s;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.bottom-corner{
+    position: absolute;
+    bottom: 10px; /* Adjust the desired distance from the bottom */
+    right: 10px;
+}
+
+.tooltip-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.mid-container {
+    display: flex;
+    justify-content: left; /* Clears any floats within the container */
+}
+
+.left-div, .right-div {
+    flex: 0 0 auto; /* Allows divs to shrink to fit content */
+    margin: 0 10px; /* Adjust the margin between the divs as per your preference */
+}
+
+.radio-input {
+    display: none;
+  }
+  
+  .radio-label {
+    cursor: pointer;
+  }
+
+  .radio-input:checked + .radio-label i {
+    color: #26283E;
+  }
+  
+  .radio-label:hover .tooltip {
+    display: block;
+  }
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+  width: 600px;
+  height: 260px;
+  background-color: #ffffff;
+  padding: 10px 30px 40px;
+}
+
+.tab-icon
+{
+    color: #52CBF5; 
+    font-size: x-large;
+    transition: all 0.5 ease;
+}
+
+.tab-icon:hover
+{
+    color: #0279AF;
+}
+
+.leyend{
+    width: 15px; height: 15px; margin-right: 5px;
+    border-radius: 2px;
+  }
+  
+.cont-leyend{
+    display: flex;
+    align-items: center;
+    margin: 20px 0px 20px 0px;
+    justify-content: center;
+}
+
+.text-center {
+    text-align: center;
+}
+  
+.reports-container {
+    display: block;
+    text-align: initial
+}
+
+.card {
+    box-shadow: none;
+    border: none;
+    padding: 20px;
+    margin: 15px;
+    box-sizing: border-box;
+    max-width: 100%; /* Limit the maximum width of the card */
+
+}
+
+.finalizado{
+    /*background-color: #CFEAC1;*/
+    background-color: rgba(159, 160, 208, 0.3);
+}
+
+.actual{
+    background-color: white;
+}
+
+.btn {
+  text-decoration: none;
+  background-color: #0796D8;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  transition: 0.3s;
+}
+
+.btn:hover{
+  text-decoration: none;
+  background-color: #0279AF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+}
+.form input {
+  margin: 10px 0;
+  width: 100%;
+  background-color: #e2e2e2;
+  border: none;
+  outline: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+}
+
+.popup {
+    width: 600px;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+}

@@ -40,7 +40,6 @@ from django.db.models import Q
 from PIL import Image as PILImage
 
 
-from chartjs.views.lines import BaseLineChartView
 # Create your views here.
 def landing(request):
     return render(request, 'main/pages/landing.html')

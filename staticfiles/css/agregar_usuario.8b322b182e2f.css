@@ -1,0 +1,79 @@
+
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-50%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(50%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+.square1 {
+    animation: 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 slideInFromLeft;
+    height: 230px;
+    width: 300px;
+    background-color: #ccc;
+    position: relative;
+    border-radius: 50px 30px 0px 70px;
+    background-image: url("/static/images/investigadora.e57121b4e65a.jpg");
+    background-size: cover;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    margin: 30px 0px 10px 0px;
+    transition: transform .5s ease;
+}
+
+.square1:hover {
+    transform: scale(1.05);
+  }
+.square2 {
+    animation: 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 slideInFromRight;
+    height: 230px;
+    width: 300px;
+    position: relative;
+    background-color: #ccc;
+    background-image: url("/static/images/doctor.3c4caf526c5d.jpg");
+    background-size: cover;
+    border-radius: 30px 50px 70px 0px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    margin: 30px 0px 10px 0px;
+    transition: transform .5s ease;
+}
+
+.square2:hover {
+    transform: scale(1.05);
+  }
+
+#pick-rol {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    flex-direction: row;
+    width: 100%;
+}
+
+.rol{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#big-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+

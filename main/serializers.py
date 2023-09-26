@@ -63,14 +63,11 @@ class ImagesSerializer(serializers.ModelSerializer):
         image_data = self.validated_data['image_data']
         reporte = self.validated_data['reporte']
         gaweeks = self.context.get('gaweeks')
-        
-        print("--------------------------------------------")
-        print("imagedata", image_data, "reporte", reporte, "gaweeks", gaweeks)
+
         mymodel = Images(image_data=image_data, reporte=reporte)
-        print("model", mymodel)
         options_dict = {"Metadata": {"sexo": "", 
                                     "ga": gaweeks,
-                                    "tipo_examen": "NEUROSONOGRAFIA",
+                                    "tipo_examen": "ECOGRAFIA III NIVEL",
                                     "hallazgo": ""}
                         } 
         mymodel.image_data.storage.object_parameters.update(options_dict)

@@ -1,0 +1,69 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/form_registro.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/main_fonts.css' %}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan&family=Montserrat:wght@700&display=swap"
+  rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div> 
+    {% endfor %}
+{% endif %}
+
+<div class="cont">
+    <div class="row">
+        <div class="col login-options">
+          <form class="registro-form" method="POST">
+            <h2> Registrar {% if tipo == 'hospital'%} hospital o centro médico{%else%} institución educativa o de investigación{%endif%} </h2>
+            <div >
+            {% csrf_token %}
+            {% if tipo == 'hospital'%} 
+                <label for="{{ form.subject.id_for_label }}">{{ form.nombrehospital.label }}</label>
+                {{ form.nombrehospital }}
+                <label for="{{ form.ciudad.id_for_label }}">{{ form.ciudad.label }}</label>
+                {{ form.ciudad }}
+                <label for="{{ form.departamento.id_for_label }}">{{ form.departamento.label }}</label>
+                {{ form.departamento }}
+            {%else%}
+                <input type="hidden" name="{{ form.institucionid.name }}" value="{{ next_id }}">
+                <label for="{{ form.subject.id_for_label }}">{{ form.nombreinstitucion.label }}</label>
+                {{ form.nombreinstitucion }}
+                <label for="{{ form.ciudad.id_for_label }}">{{ form.ciudad.label }}</label>
+                {{ form.ciudad }}
+                <label for="{{ form.departamento.id_for_label }}">{{ form.departamento.label }}</label>
+                {{ form.departamento }}
+            {%endif%}
+            </br>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                {% if tipo == 'hospital'%} 
+                <button type="submit" class="btn btn-primary" style="width: 60%;">Registrar hospital</button>
+                {% else %}
+                <button type="submit" class="btn btn-primary" style="width: 60%;">Registrar institución</button>
+                {% endif %}
+            </div>
+            </div>
+          </form>
+        </div>
+      <div class="col-6 image-login">
+        {% if tipo == 'academico'%} 
+        <img src="{% static 'images/new-external.png' %}" class="img-fl" alt="Nueva institución académica">
+        {% else %}
+        <img src="{% static 'images/new-medical.png' %}" class="img-fl" alt="Nuevo hospital">
+        {%endif%}
+      </div>
+    </br> </br>
+    
+    </div>
+</div>
+
+{% endblock %}

@@ -81,3 +81,26 @@ class ImageUploadForm(forms.ModelForm):
     class Meta:
         model = Images
         exclude = ['image_data']
+        
+class HospitalForm(forms.ModelForm):
+    CIUDAD = (('Bucaramanga', 'Bucaramanga'),('Floridablanca', 'Floridablanca'),('Piedecuesta', 'Piedecuesta'),('Cali', 'Cali'),('Medellin', 'Medellin'),('Bogota', 'Bogotá'),('Cucuta', 'Cucuta'),('Santa Marta', 'Santa Marta'))
+    DEPARTAMENTO = (('Santander', 'Santander'),('Cundinamarca', 'Cundinamarca'),('Antoquia', 'Antoquia'),('Valle del Cauca', 'Valle del Cauca'),('Norte de Santander', 'Norte de Santander'),('Magdalena', 'Magdalena'))
+    nombrehospital = forms.CharField(label="Nombre del hospital", max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': ' '}) )
+    ciudad = forms.ChoiceField(label="Ciudad", choices=CIUDAD, required=True, widget=forms.Select(attrs={'class': 'form-control'}) )
+    departamento = forms.ChoiceField(label="Departamento", choices=DEPARTAMENTO, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
+    
+    class Meta:
+        model = Hospital
+        fields = ['nombrehospital', 'ciudad', 'departamento']
+    
+class InstitucionForm(forms.ModelForm):
+    CIUDAD = (('Bucaramanga', 'Bucaramanga'),('Floridablanca', 'Floridablanca'),('Piedecuesta', 'Piedecuesta'),('Cali', 'Cali'),('Medellin', 'Medellin'),('Bogota', 'Bogotá'),('Cucuta', 'Cucuta'),('Santa Marta', 'Santa Marta'))
+    DEPARTAMENTO = (('Santander', 'Santander'),('Cundinamarca', 'Cundinamarca'),('Antoquia', 'Antoquia'),('Valle del Cauca', 'Valle del Cauca'),('Norte de Santander', 'Norte de Santander'),('Magdalena', 'Magdalena'))
+    institucionid = forms.IntegerField(label="Id", required=True, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': ' '}) )
+    nombreinstitucion = forms.CharField(label="Nombre de la institución", max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': ' '}) )
+    ciudad = forms.ChoiceField(label="Ciudad", choices=CIUDAD, required=True, widget=forms.Select(attrs={'class': 'form-control'}) )
+    departamento = forms.ChoiceField(label="Departamento", choices=DEPARTAMENTO, required=True, widget=forms.Select(attrs={'class': 'form-control'}))
+    
+    class Meta:
+        model = Institucion
+        fields = ['institucionid', 'nombreinstitucion', 'ciudad', 'departamento']

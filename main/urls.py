@@ -27,5 +27,6 @@ urlpatterns = [
     path("consultas/nueva/multiple", views.agregar_consulta_multiple, name="consultas/nueva/multiple"),
     path("reportes/temporal/multiple", views.temporal_historial, name="temporal_historial"),
     path("consultas/imagenes", views.upload_images, name="upload_images"),
-    path("consultas/display_image/<int:reporte>", views.display_image, name="display_image")
+    path("consultas/display_image/<int:reporte>", views.display_image, name="display_image"),
+    path("institucion/nuevo", views.agregar_hospital, name="institucion/nuevo"),
 ]

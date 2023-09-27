@@ -56,7 +56,7 @@
     transform: scale(1.05);
   }
 
-#pick-rol {
+#pick-rol{
     display: flex;
     justify-content: center;
     gap: 100px;
@@ -69,6 +69,56 @@
     flex-direction: column;
     align-items: center;
 }
+
+#pick-tipo {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  flex-direction: row;
+  width: 100%;
+}
+
+.tipo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.squareH {
+  animation: 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 slideInFromLeft;
+  height: 230px;
+  width: 300px;
+  background-color: #ccc;
+  position: relative;
+  border-radius: 50px 30px 0px 70px;
+  background-image: url("/static/images/hospital.jpg");
+  background-size: cover;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 30px 0px 10px 0px;
+  transition: transform .5s ease;
+}
+
+.squareH:hover {
+  transform: scale(1.05);
+}
+.squareI {
+  animation: 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 slideInFromRight;
+  height: 230px;
+  width: 300px;
+  position: relative;
+  background-color: #ccc;
+  background-image: url("/static/images/institucion.jpg");
+  background-size: cover;
+  border-radius: 30px 50px 70px 0px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 30px 0px 10px 0px;
+  transition: transform .5s ease;
+}
+
+.squareI:hover {
+  transform: scale(1.05);
+}
+
 
 #big-box{
     display: flex;

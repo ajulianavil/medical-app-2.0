@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import View
 import requests
-from main.forms import RepositorioFilterForm
+from main.forms import HospitalForm, InstitucionForm, RepositorioFilterForm
 from users.context_processors import current_user
 from main.forms import CreateUserForm, UploadFileForm, ImageUploadForm
 # from main.utils import get_matching_consulta, get_mediciones, export_to_csv
@@ -1335,6 +1335,50 @@ def agregar_usuario(request):
             return redirect('/login')   
         return render(request, 'agregar_usuario/seleccionar_usuario.html')
 
+def agregar_hospital(request):
+    tipo = request.GET.get('tipo')
+    if request.method == "POST":
+        storage = messages.get_messages(request)
+        for message in storage:
+            pass  # Do nothing, simply iterate over the messages
+
+        storage.used = True
+        if tipo == 'hospital':
+            form = HospitalForm(request.POST,request.FILES)
+        else:
+            form = InstitucionForm(request.POST,request.FILES)
+            
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'¡Se ha agregado esta institución a la base de datos!')
+            # form = HospitalForm()
+            return render(request, 'agregar_usuario/seleccionar_institucion.html')
+        else:
+            for error in list(form.errors.values()):
+                error_str = str(error)
+                print(form.errors)
+                messages.error(request, error_str) 
+
+            return render(request, 'agregar_usuario/seleccionar_institucion.html')
+    else:
+        tipo = request.GET.get('tipo')
+        if tipo == 'hospital':
+            form = HospitalForm()
+            return render(request, 'agregar_usuario/agregar_institucion.html', {"form": form, "tipo": tipo})
+            
+        if tipo == 'academico':
+            last_institution = Institucion.objects.last()
+            last_id = last_institution.institucionid
+            next_id = last_id+1
+            form = InstitucionForm()
+            return render(request, 'agregar_usuario/agregar_institucion.html', {"form": form, "tipo": tipo, "next_id": next_id})
+        else:
+            return render(request, 'agregar_usuario/seleccionar_institucion.html')
+            
+        if not request.user.is_authenticated:
+            return redirect('/login')   
+        return render(request, 'agregar_usuario/seleccionar_institucion.html')
+    
 def ver_usuarios(request):
     if request.method == 'POST':
         all_users = Appuser.objects.all().order_by('-savedate')

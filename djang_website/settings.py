@@ -31,9 +31,14 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'medicaldiagnosisapp-jpvmb3vv.b4a.run',
+    'node83a.containers.back4app.com',
     # Add any other domains or IP addresses here
 ]
 
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://medicaldiagnosisapp-jpvmb3vv.b4a.run',
+]
 
 # Application definition
 

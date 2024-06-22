@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'medicaldiagnosisapp-jpvmb3vv.b4a.run',
     'node83a.containers.back4app.com',
+    'node87a.containers.back4app.com',
     # Add any other domains or IP addresses here
 ]
 

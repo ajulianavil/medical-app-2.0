@@ -15,7 +15,6 @@ services:
   django_gunicorn:
     build:
       context: .
-    command: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static:/static
     env_file:
@@ -30,6 +29,9 @@ services:
       - DATABASE_PASSWORD=${PASSWORD}
       - DATABASE_HOST=${HOST}
       - DATABASE_PORT=${PORT}
+      - SUPER_USER_NAME=${SUPER_USER_NAME}
+      - SUPER_USER_EMAIL=${SUPER_USER_EMAIL}
+      - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
     networks:
       - mynetwork
 

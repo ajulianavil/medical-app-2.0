@@ -30,4 +30,7 @@ COPY . /app
 
 # Start script or command
 COPY ./entrypoint.sh /
+
+EXPOSE 8000
+
 ENTRYPOINT ["sh", "/entrypoint.sh"]

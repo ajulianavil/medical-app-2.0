@@ -13,6 +13,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - mynetwork
 
   django_gunicorn:
     volumes:
@@ -25,6 +27,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    networks:
+      - mynetwork
   nginx:
     build: ./nginx
     volumes:
@@ -33,7 +37,12 @@ services:
       - "80:80"
     depends_on:
       - django_gunicorn
+    networks:
+      - mynetwork
 
 volumes:
   static:
   postgres_data:
+
+networks:
+  mynetwork:

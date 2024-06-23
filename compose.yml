@@ -1,6 +1,10 @@
+version: "3.7"
+
 services:
   db:
     image: postgres:13
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: ${NAME}
       POSTGRES_USER: ${USER}
@@ -8,33 +12,19 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:65489"
-    networks:
-      - mynetwork
+      - "5432:5432"
 
   django_gunicorn:
-    build:
-      context: .
     volumes:
       - static:/static
     env_file:
       - .env
+    build:
+      context: .
     ports:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      - DATABASE_NAME=${NAME}
-      - DATABASE_USER=${USER}
-      - DATABASE_PASSWORD=${PASSWORD}
-      - DATABASE_HOST=${HOST}
-      - DATABASE_PORT=${PORT}
-      - SUPER_USER_NAME=${SUPER_USER_NAME}
-      - SUPER_USER_EMAIL=${SUPER_USER_EMAIL}
-      - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
-    networks:
-      - mynetwork
-
   nginx:
     build: ./nginx
     volumes:
@@ -43,12 +33,7 @@ services:
       - "80:80"
     depends_on:
       - django_gunicorn
-    networks:
-      - mynetwork
 
 volumes:
   static:
   postgres_data:
-
-networks:
-  mynetwork:

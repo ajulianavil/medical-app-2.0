@@ -30,8 +30,8 @@ DEBUG = os.getenv("DEBUG"),
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    'django',
     'medicaldiagnosisapp-jpvmb3vv.b4a.run',
-    'node83a.containers.back4app.com',
     'node87a.containers.back4app.com',
     # Add any other domains or IP addresses here
 ]
@@ -135,7 +135,7 @@ DATABASES={
       'USER': os.getenv("USER"),
       'PASSWORD': os.getenv("PASSWORD"),
       'HOST': os.getenv("HOST"),
-      'PORT':'65489',
+      'PORT':'5432',
    }
 }
 

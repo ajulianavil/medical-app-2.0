@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     'django',
     'medicaldiagnosisapp-jpvmb3vv.b4a.run',
     'node87a.containers.back4app.com',
+    'node83a.containers.back4app.com',
     # Add any other domains or IP addresses here
 ]
 

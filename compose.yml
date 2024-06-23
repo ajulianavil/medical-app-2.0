@@ -10,15 +10,19 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:65489"
+      - "5432:5432"
     networks:
       - mynetwork
 
   web:
-    build: .
+    build:
+      context: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
+      - static:/static
+    env_file:
+      - .env
+
     ports:
       - "8000:8000"
     depends_on:
@@ -34,6 +38,7 @@ services:
 
 volumes:
   postgres_data:
+  static:
 
 networks:
   mynetwork:

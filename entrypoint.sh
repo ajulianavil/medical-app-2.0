@@ -3,8 +3,13 @@
 python manage.py migrate --no-input
 python manage.py collectstatic --no-input
 
-DJANGO_SUPERUSER_PASSWORD=$SUPER_USER_PASSWORD python manage.py createsuperuser --username $SUPER_USER_NAME --email $SUPER_USER_EMAIL --noinput
+# Set environment variables for the superuser creation
+export DJANGO_SUPERUSER_PASSWORD=$SUPER_USER_PASSWORD
+export DJANGO_SUPERUSER_NAME=$SUPER_USER_NAME
+export DJANGO_SUPERUSER_EMAIL=$SUPER_USER_EMAIL
 
-# gunicorn django_project.wsgi:application --bind 0.0.0.0:8000
+# Create superuser without interactive input
+python manage.py createsuperuser --username $DJANGO_SUPERUSER_NAME --email $DJANGO_SUPERUSER_EMAIL --no-input
 
-python manage.py runserver 0.0.0.0:8000
+# Start gunicorn
+gunicorn djang_website.wsgi:application --bind 0.0.0.0:8000

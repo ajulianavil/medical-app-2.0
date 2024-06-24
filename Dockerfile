@@ -10,6 +10,7 @@ RUN apt-get update && \
     liblapack-dev \
     gfortran \
     libpq-dev \
+    dos2unix \
     && \
     rm -rf /var/lib/apt/lists/*
 
@@ -28,9 +29,11 @@ RUN pip install -r requirements.txt
 # Copy project files
 COPY . /app
 
+# Ensure the entrypoint script is executable and convert line endings
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh && dos2unix /entrypoint.sh
+
 # Start script or command
-COPY ./entrypoint.sh /
+ENTRYPOINT ["sh", "/entrypoint.sh"]
 
 EXPOSE 8000
-
-ENTRYPOINT ["sh", "/entrypoint.sh"]

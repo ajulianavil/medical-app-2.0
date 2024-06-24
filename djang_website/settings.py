@@ -31,9 +31,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'django',
-    'medicaldiagnosisapp-jpvmb3vv.b4a.run',
-    'node87a.containers.back4app.com',
-    'node83a.containers.back4app.com',
+    'materno-app-b3309134adf8.herokuapp.com',
     # Add any other domains or IP addresses here
 ]
 

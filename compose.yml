@@ -3,6 +3,7 @@ version: "3.7"
 services:
   db:
     image: postgres:13
+    container_name: db
     env_file:
       - .env
     environment:
@@ -23,6 +24,8 @@ services:
       - .env
     build:
       context: .
+    links:
+      - db:db
     ports:
       - "8000:8000"
     networks:
@@ -34,6 +37,8 @@ services:
       - static:/static
     ports:
       - "80:80"
+    links:
+      - db:db
     depends_on:
       - django_gunicorn
     networks:
@@ -45,3 +50,4 @@ volumes:
 
 networks:
   medicalapp-network:
+    driver: bridge

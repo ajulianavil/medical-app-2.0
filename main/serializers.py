@@ -55,20 +55,30 @@ class FetoSerializer(serializers.ModelSerializer):
 class ImagesSerializer(serializers.ModelSerializer):
     image_data = serializers.FileField(required=True)
     
+    # class Meta:
+    #     model = Images
+    #     fields = ['image_data', 'reporte']
+        
+    # def save(self):
+    #     image_data = self.validated_data['image_data']
+    #     reporte = self.validated_data['reporte']
+    #     gaweeks = self.context.get('gaweeks')
+
+    #     mymodel = Images(image_data=image_data, reporte=reporte)
+    #     options_dict = {"Metadata": {"sexo": "", 
+    #                                 "ga": gaweeks,
+    #                                 "tipo_examen": "ECOGRAFIA III NIVEL",
+    #                                 "hallazgo": ""}
+    #                     } 
+    #     mymodel.image_data.storage.object_parameters.update(options_dict)
+    #     mymodel.save()
     class Meta:
         model = Images
-        fields = ['image_data', 'reporte']
-        
-    def save(self):
-        image_data = self.validated_data['image_data']
-        reporte = self.validated_data['reporte']
-        gaweeks = self.context.get('gaweeks')
+        fields = ['image_data', 'reporte', 'sexo', 'ga', 'tipo_examen', 'hallazgo']
 
-        mymodel = Images(image_data=image_data, reporte=reporte)
-        options_dict = {"Metadata": {"sexo": "", 
-                                    "ga": gaweeks,
-                                    "tipo_examen": "ECOGRAFIA III NIVEL",
-                                    "hallazgo": ""}
-                        } 
-        mymodel.image_data.storage.object_parameters.update(options_dict)
-        mymodel.save()
+    def create(self, validated_data):
+        gaweeks = self.context.get('gaweeks')
+        validated_data['ga'] = gaweeks
+        validated_data['tipo_examen'] = "ECOGRAFIA III NIVEL"
+
+        return super().create(validated_data)

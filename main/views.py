@@ -72,7 +72,6 @@ def homepage(request):
             is_register_complete = Usuarioexterno.objects.filter(userid=userid).all()
             if not is_register_complete:
                 return redirect('user_data')
-        
         return render(request, 'main/pages/home.html', {'user': user})
    
 def personal(request, personal: int):

@@ -180,8 +180,16 @@ class FetoMedicionDiagnostico(models.Model):
         db_table = 'FetoMedicionDiagnostico'
         verbose_name_plural = "FetoMedicionDiagnostico"
         
+# class Images(models.Model):
+#     idimage = models.BigAutoField(primary_key=True)
+#     image_data = models.FileField(upload_to='ultrasond_images/')
+#     reporte = models.ForeignKey(Reporte, models.CASCADE, default="")  # Field name made lowercase.
+
 class Images(models.Model):
     idimage = models.BigAutoField(primary_key=True)
-    image_data = models.FileField(upload_to='ultrasond_images/')
-    reporte = models.ForeignKey(Reporte, models.CASCADE, default="")  # Field name made lowercase.
-    
+    image_data = models.FileField(upload_to='ultrasound_images/')
+    reporte = models.ForeignKey(Reporte, models.CASCADE, default="")
+    sexo = models.CharField(max_length=10, blank=True)
+    ga = models.IntegerField(blank=True, null=True)
+    tipo_examen = models.CharField(max_length=100, blank=True)
+    hallazgo = models.TextField(blank=True)
